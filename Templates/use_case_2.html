@@ -1,0 +1,79 @@
+<!-- Herencia del diseño maestro base -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-2">
+    <!-- Encabezado del caso de uso 2 -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <span class="badge bg-warning text-dark mb-2 fs-6" data-i18n="uc2_badge">Use Case 2 — Cloud & Infrastructure</span>
+            <h1 class="fw-bold text-dark" data-i18n="uc2_title">Predictive Maintenance in Render Data Centers</h1>
+            <p class="lead text-muted" data-i18n="uc2_subtitle">Anticipating critical hardware failures (GPUs/CPUs) across cloud rendering farms and server infrastructure.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" class="img-fluid rounded shadow-sm border" alt="Data Center">
+        </div>
+    </div>
+
+    <!-- Rejilla de contexto y variables de hardware -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold" data-i18n="uc2_ctx_title">⚙️ Problem Context</h5>
+                    <p class="card-text" data-i18n="uc2_ctx_text">Game development studios and cloud gaming platforms operate thousands of servers 24/7. Sudden GPU hardware failures during high-load render jobs lead to server downtime and data loss.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold" data-i18n="uc2_data_title">📈 Required Data</h5>
+                    <ul class="card-text mb-0" data-i18n="uc2_data_list">
+                        <li>Core temperature (°C) and fan RPM speeds.</li>
+                        <li>Voltage fluctuations and power consumption (Watts).</li>
+                        <li>Accumulated operating hours under full load.</li>
+                        <li>Memory error rates logged in VRAM.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Especificaciones de la Regresión Supervisada aplicada -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" data-i18n="uc2_m1_title">🤖 Machine Learning Type</h6>
+                    <p class="card-text" data-i18n="uc2_m1_text"><strong>Supervised Learning (Regression)</strong>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" data-i18n="uc2_m2_title">🔮 Model Objective</h6>
+                    <p class="card-text" data-i18n="uc2_m2_text">Predict the <strong>Remaining Useful Life (RUL)</strong> in operating hours before a hardware component overheats or fails.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" data-i18n="uc2_m3_title">💡 Potential Benefit</h6>
+                    <p class="card-text" data-i18n="uc2_m3_text">Minimizes unplanned downtime and optimizes hardware replacement schedules.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejemplo de alerta preventiva -->
+    <div class="card border-start border-warning border-4 shadow-sm bg-white p-3">
+        <div class="card-body">
+            <h5 class="fw-bold text-warning text-dark mb-2" data-i18n="uc2_ex_title">📌 Practical Example</h5>
+            <p class="mb-0" data-i18n="uc2_ex_text">A rack sensor registers thermal spikes reaching 88°C coupled with fan efficiency loss on GPU #42. The model predicts hardware failure within <strong>36 hours</strong>, automatically rerouting active workloads and alerting technicians for proactive replacement.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

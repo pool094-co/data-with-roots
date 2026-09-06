@@ -1,0 +1,37 @@
+<!-- Herencia del diseño base estandarizado -->
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Título de la vista de conceptos teóricos de regresión lineal -->
+<h2 class="mb-4 text-dark border-bottom pb-2" data-i18n="regc_title">Linear Regression Concepts</h2>
+
+<!-- Tarjeta contenedora de la teoría matemática y conceptual del algoritmo -->
+<div class="bg-white p-4 rounded shadow-sm border">
+    <h5 class="text-success fw-bold" data-i18n="regc_sub1">What is Linear Regression?</h5>
+    <p data-i18n="regc_p1">Linear Regression is a supervised learning algorithm that models the mathematical relationship between an independent input variable ($X$) and a continuous dependent target variable ($Y$) using a straight regression line.</p>
+    
+    <!-- Rejilla de comparación para las variables independiente y dependiente -->
+    <div class="row my-4 g-3">
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light">
+                <strong class="text-primary" data-i18n="regc_varx_title">Independent Variable (X):</strong>
+                <p class="mb-0" data-i18n="regc_varx_desc">The input predictor factor (e.g., Age of the mobile phone in <strong>months</strong>).</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light">
+                <strong class="text-success" data-i18n="regc_vary_title">Dependent Variable (Y):</strong>
+                <p class="mb-0" data-i18n="regc_vary_desc">The output target to predict (e.g., Estimated market price in <strong>COP</strong>).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listado explicativo de componentes esenciales del modelo -->
+    <h5 class="text-success fw-bold mt-3" data-i18n="regc_sub2">Key Elements</h5>
+    <ul data-i18n="regc_list">
+        <li><strong>Relationship between variables:</strong> Analyzes how the dependent variable changes as the independent variable varies.</li>
+        <li><strong>Regression line:</strong> The best-fit trend line calculated to minimize prediction errors across all data points.</li>
+        <li><strong>Prediction:</strong> Calculating expected values for new unseen inputs based on the trained regression line.</li>
+    </ul>
+</div>
+{% endblock %}

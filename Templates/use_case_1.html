@@ -1,0 +1,79 @@
+<!-- Herencia del diseño maestro base -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-2">
+    <!-- Encabezado con atributos de internacionalización declarativos -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <span class="badge bg-danger mb-2 fs-6" data-i18n="uc1_badge">Use Case 1 — Gaming & Tech</span>
+            <h1 class="fw-bold text-dark" data-i18n="uc1_title">Predictive Anti-Cheat Detection in Multiplayer Games</h1>
+            <p class="lead text-muted" data-i18n="uc1_subtitle">Leveraging Machine Learning to identify players using unauthorized software (Aimbots, Wallhacks) in competitive online games.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" class="img-fluid rounded shadow-sm border" alt="Anti-Cheat Gaming">
+        </div>
+    </div>
+
+    <!-- Rejilla con contexto operativo y variables de entrada -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold" data-i18n="uc1_ctx_title">🎯 Problem Context</h5>
+                    <p class="card-text" data-i18n="uc1_ctx_text">In competitive eSports, malicious cheating software ruins fairness, frustrating legitimate players and causing massive financial losses due to player churn.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold" data-i18n="uc1_data_title">📊 Required Data</h5>
+                    <ul class="card-text mb-0" data-i18n="uc1_data_list">
+                        <li>Mouse angular speed and crosshair tracking precision.</li>
+                        <li>Headshot accuracy percentage.</li>
+                        <li>Millisecond reaction times upon enemy spawn.</li>
+                        <li>In-game movement trajectories and map coordinates.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Módulo técnico del modelo -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" data-i18n="uc1_m1_title">🤖 Machine Learning Type</h6>
+                    <p class="card-text" data-i18n="uc1_m1_text"><strong>Supervised Learning (Classification)</strong> & Anomaly Detection.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" data-i18n="uc1_m2_title">🔮 Model Objective</h6>
+                    <p class="card-text" data-i18n="uc1_m2_text">Classify real-time match telemetry as <em>"Organic Human"</em> or <em>"Anomalous Bot (CHEAT)"</em>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" data-i18n="uc1_m3_title">💡 Potential Benefit</h6>
+                    <p class="card-text" data-i18n="uc1_m3_text">Automated instant suspension before malicious cheaters impact global competitive leaderboards.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejemplo práctico destacado -->
+    <div class="card border-start border-danger border-4 shadow-sm bg-white p-3">
+        <div class="card-body">
+            <h5 class="fw-bold text-danger mb-2" data-i18n="uc1_ex_title">📌 Practical Example</h5>
+            <p class="mb-0" data-i18n="uc1_ex_text">The model evaluates player telemetry during a FPS shooter match. It flags 8 consecutive headshots in 0.15 seconds with zero line-of-sight visibility. Comparing this against human performance baselines, it computes a <strong>99.4% cheat probability</strong> and triggers an automated temporary ban.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

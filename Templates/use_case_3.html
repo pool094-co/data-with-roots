@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-2">
+    <!-- Texto base en inglés para sincronización limpia -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <span class="badge bg-info text-dark mb-2 fs-6" id="uc3-badge">Use Case 3 — Artificial Intelligence in Gaming</span>
+            <h1 class="fw-bold text-dark" id="uc3-title">Adaptive NPC Behavior via Reinforcement Learning</h1>
+            <p class="lead text-muted" id="uc3-subtitle">Dynamically adjusting Non-Player Character (NPC) combat tactics by learning from each player's playstyle.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" class="img-fluid rounded shadow-sm border" alt="AI Game Character">
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold" id="uc3-ctx-title">🎮 Problem Context</h5>
+                    <p class="card-text" id="uc3-ctx-text">Traditional video game NPCs follow rigid scripted paths. Once players discover pattern exploits, gameplay becomes predictable and loses engagement.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold" id="uc3-data-title">🧠 Required Data</h5>
+                    <ul class="card-text mb-0" id="uc3-data-list">
+                        <li>Weapon usage frequency (Ranged, Melee, Magic).</li>
+                        <li>Preferred player positioning and map choke points.</li>
+                        <li>Average duration spent in stealth or cover.</li>
+                        <li>Success rate in parrying and dodging incoming attacks.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" id="uc3-m1-title">🤖 Machine Learning Type</h6>
+                    <p class="card-text" id="uc3-m1-text"><strong>Reinforcement Learning</strong> & Clustering.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" id="uc3-m2-title">🔮 Model Objective</h6>
+                    <p class="card-text" id="uc3-m2-text">Identify player tactical weaknesses and predict their next move to execute intelligent counter-strategies.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary" id="uc3-m3-title">💡 Potential Benefit</h6>
+                    <p class="card-text" id="uc3-m3-text">Delivers highly immersive gameplay, high replayability, and dynamically scales difficulty to player skill level.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-start border-info border-4 shadow-sm bg-white p-3">
+        <div class="card-body">
+            <h5 class="fw-bold text-info text-dark mb-2" id="uc3-ex-title">📌 Practical Example</h5>
+            <p class="mb-0" id="uc3-ex-text">If a player completes 80% of encounters by sniping from high perches, the NPC AI adapts: boss enemies in the next area <strong>equip heavy shields against arrows, deploy smoke screens near high ground, and flush out the player in close-quarters combat</strong>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const uc3Texts = {
+        en: {
+            badge: "Use Case 3 — Artificial Intelligence in Gaming",
+            title: "Adaptive NPC Behavior via Reinforcement Learning",
+            subtitle: "Dynamically adjusting Non-Player Character (NPC) combat tactics by learning from each player's playstyle.",
+            ctxTitle: "🎮 Problem Context",
+            ctxText: "Traditional video game NPCs follow rigid scripted paths. Once players discover pattern exploits, gameplay becomes predictable and loses engagement.",
+            dataTitle: "🧠 Required Data",
+            dataList: "<li>Weapon usage frequency (Ranged, Melee, Magic).</li><li>Preferred player positioning and map choke points.</li><li>Average duration spent in stealth or cover.</li><li>Success rate in parrying and dodging incoming attacks.</li>",
+            m1Title: "🤖 Machine Learning Type",
+            m1Text: "<strong>Reinforcement Learning</strong> & Clustering.",
+            m2Title: "🔮 Model Objective",
+            m2Text: "Identify player tactical weaknesses and predict their next move to execute intelligent counter-strategies.",
+            m3Title: "💡 Potential Benefit",
+            m3Text: "Delivers highly immersive gameplay, high replayability, and dynamically scales difficulty to player skill level.",
+            exTitle: "📌 Practical Example",
+            exText: "If a player completes 80% of encounters by sniping from high perches, the NPC AI adapts: boss enemies in the next area <strong>equip heavy shields against arrows, deploy smoke screens near high ground, and flush out the player in close-quarters combat</strong>."
+        },
+        es: {
+            badge: "Caso de Uso 3 — Inteligencia Artificial en Juegos",
+            title: "Comportamiento Adaptativo de NPCs mediante Aprendizaje por Refuerzo",
+            subtitle: "Ajuste dinámico de las tácticas de personajes no jugables (NPCs) aprendiendo del estilo de juego del usuario.",
+            ctxTitle: "🎮 Contexto del Problema",
+            ctxText: "Los enemigos tradicionales en juegos siguen rutas rígidas. Cuando los jugadores descubren los patrones, el juego pierde interés y desafío.",
+            dataTitle: "🧠 Datos Requeridos",
+            dataList: "<li>Frecuencia de uso de armas (distancia, cuerpo a cuerpo, magia).</li><li>Posicionamiento preferido y zonas del mapa frecuentadas.</li><li>Tiempo promedio en sigilo o cobertura.</li><li>Tasa de éxito esquivando y bloqueando ataques.</li>",
+            m1Title: "🤖 Tipo de Machine Learning",
+            m1Text: "<strong>Aprendizaje por Refuerzo</strong> y Clustering.",
+            m2Title: "🔮 Objetivo del Modelo",
+            m2Text: "Identificar debilidades tácticas del jugador y predecir su siguiente movimiento para ejecutar contraataques inteligentes.",
+            m3Title: "💡 Beneficio Potencial",
+            m3Text: "Ofrece experiencia inmersiva, alta rejugabilidad y escala la dificultad según el nivel del jugador.",
+            exTitle: "📌 Ejemplo Práctico",
+            exText: "Si un jugador supera el 80% de los combates atacando desde zonas altas con arco, la IA se adapta: los enemigos <strong>equipan escudos pesados, lanzan bombas de humo e inician combate cuerpo a cuerpo</strong>."
+        }
+    };
+
+    function applyUC3Language(lang) {
+        const t = uc3Texts[lang] || uc3Texts.en;
+        if (document.getElementById('uc3-badge')) document.getElementById('uc3-badge').textContent = t.badge;
+        if (document.getElementById('uc3-title')) document.getElementById('uc3-title').textContent = t.title;
+        if (document.getElementById('uc3-subtitle')) document.getElementById('uc3-subtitle').textContent = t.subtitle;
+        if (document.getElementById('uc3-ctx-title')) document.getElementById('uc3-ctx-title').textContent = t.ctxTitle;
+        if (document.getElementById('uc3-ctx-text')) document.getElementById('uc3-ctx-text').textContent = t.ctxText;
+        if (document.getElementById('uc3-data-title')) document.getElementById('uc3-data-title').textContent = t.dataTitle;
+        if (document.getElementById('uc3-data-list')) document.getElementById('uc3-data-list').innerHTML = t.dataList;
+        if (document.getElementById('uc3-m1-title')) document.getElementById('uc3-m1-title').textContent = t.m1Title;
+        if (document.getElementById('uc3-m1-text')) document.getElementById('uc3-m1-text').innerHTML = t.m1Text;
+        if (document.getElementById('uc3-m2-title')) document.getElementById('uc3-m2-title').textContent = t.m2Title;
+        if (document.getElementById('uc3-m2-text')) document.getElementById('uc3-m2-text').textContent = t.m2Text;
+        if (document.getElementById('uc3-m3-title')) document.getElementById('uc3-m3-title').textContent = t.m3Title;
+        if (document.getElementById('uc3-m3-text')) document.getElementById('uc3-m3-text').textContent = t.m3Text;
+        if (document.getElementById('uc3-ex-title')) document.getElementById('uc3-ex-title').textContent = t.exTitle;
+        if (document.getElementById('uc3-ex-text')) document.getElementById('uc3-ex-text').innerHTML = t.exText;
+    }
+
+    window.addEventListener('languageChanged', (e) => applyUC3Language(e.detail.lang));
+    document.addEventListener('DOMContentLoaded', () => applyUC3Language(localStorage.getItem('preferred_lang') || 'en'));
+    applyUC3Language(localStorage.getItem('preferred_lang') || 'en');
+</script>
+{% endblock %}

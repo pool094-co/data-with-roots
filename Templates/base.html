@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Configuración estándar de metadatos: Codificación de caracteres UTF-8 y Viewport responsivo -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data with Roots - Machine Learning App</title>
+    
+    <!-- Hoja de estilos del framework Bootstrap 5 via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <!-- NAV BAR SUPERIOR STICKY -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <!-- Logotipo de la marca con icono de teléfono inteligente -->
+            <a class="navbar-brand fw-bold text-success" href="/">📱 Data with Roots</a>
+            
+            <div class="d-flex align-items-center order-lg-3 ms-auto">
+                <!-- SELECTOR DESPLEGABLE DE IDIOMA (EN / ES) CON BANDERAS -->
+                <div class="dropdown me-2 me-lg-0">
+                    <button class="btn btn-outline-success btn-sm dropdown-toggle d-flex align-items-center gap-2 text-white" type="button" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span id="currentLangFlag">🇺🇸</span> <span id="currentLangText">English</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="langDropdown">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setLanguage('en'); return false;">
+                                🇺🇸 English
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setLanguage('es'); return false;">
+                                🇨🇴 Español
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Botón hamburguesa para colapso en pantallas móviles -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <!-- Menú de navegación principal -->
+            <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" data-i18n="nav_home">Home</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="mlDropdown" data-bs-toggle="dropdown" data-i18n="nav_ml">Machine Learning</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ml/concepts" data-i18n="nav_concepts">Concepts</a></li>
+                            <li><a class="dropdown-item" href="/ml/types" data-i18n="nav_types">Types of Machine Learning</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><span class="dropdown-item-text fw-bold" data-i18n="nav_usecases">Use Cases</span></li>
+                            <li><a class="dropdown-item" href="/ml/use-case-1" data-i18n="nav_uc1">Use Case 1</a></li>
+                            <li><a class="dropdown-item" href="/ml/use-case-2" data-i18n="nav_uc2">Use Case 2</a></li>
+                            <li><a class="dropdown-item" href="/ml/use-case-3" data-i18n="nav_uc3">Use Case 3</a></li>
+                            <li><a class="dropdown-item" href="/ml/use-case-4" data-i18n="nav_uc4">Use Case 4</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="supDropdown" data-bs-toggle="dropdown" data-i18n="nav_supervised">Supervised</a>
+                        <ul class="dropdown-menu">
+                            <li><span class="dropdown-item-text fw-bold" data-i18n="nav_linreg">Linear Regression</span></li>
+                            <li><a class="dropdown-item" href="/regression/concepts" data-i18n="nav_concepts">Concepts</a></li>
+                            <li><a class="dropdown-item" href="/LinearRegression/" data-i18n="nav_app">Application</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENEDOR PRINCIPAL DINÁMICO (JINJA2) -->
+    <main class="container my-4 flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p class="mb-0" data-i18n="footer_text">&copy; 2026 Data with Roots — All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- MOTOR CENTRALIZADO DE INTERNACIONALIZACIÓN (I18N) -->
+    <script>
+        // Diccionario unificado que consolida claves globales y de vistas teóricas
+        const translations = {
+            en: {
+                // Navegación y Footer
+                nav_home: "Home",
+                nav_ml: "Machine Learning",
+                nav_concepts: "Concepts",
+                nav_types: "Types of Machine Learning",
+                nav_usecases: "Use Cases",
+                nav_uc1: "Use Case 1",
+                nav_uc2: "Use Case 2",
+                nav_uc3: "Use Case 3",
+                nav_uc4: "Use Case 4",
+                nav_supervised: "Supervised",
+                nav_linreg: "Linear Regression",
+                nav_app: "Application",
+                footer_text: "© 2026 Data with Roots — All rights reserved.",
+
+                // Vista Home
+                home_title: "Welcome to Data with Roots",
+                home_desc: "An interactive web application designed to predict used mobile phone prices based on their age in months.",
+                home_btn_explore: "Explore ML Concepts",
+                home_btn_predict: "Try Predictive Model",
+
+                // Vista ML Concepts
+                concepts_title: "Fundamental Machine Learning Concepts",
+                concepts_c1_title: "What is Machine Learning?",
+                concepts_c1_text: "Machine Learning is a branch of Artificial Intelligence that enables computer systems to automatically learn and improve from experience without being explicitly programmed.",
+                concepts_c2_title: "Main Purpose",
+                concepts_c2_text: "To identify underlying patterns within historical data in order to make accurate predictions, classifications, or automated insights on new, unseen data.",
+                concepts_c3_title: "Relationship: Data → Training → Model → Predictions",
+                concepts_c3_text: "Raw <strong>Data</strong> feeds the <strong>Training</strong> algorithm, adjusting mathematical parameters to build an optimized <strong>Model</strong> that outputs reliable <strong>Predictions</strong>.",
+                concepts_c3_alert: "<strong>Importance of Data:</strong> Without high-quality, clean, and representative data, Machine Learning models cannot learn valid patterns.",
+
+                // Caso de Uso 1 (Anti-Cheat)
+                uc1_badge: "Use Case 1 — Gaming & Tech",
+                uc1_title: "Predictive Anti-Cheat Detection in Multiplayer Games",
+                uc1_subtitle: "Leveraging Machine Learning to identify players using unauthorized software (Aimbots, Wallhacks) in competitive online games.",
+                uc1_ctx_title: "🎯 Problem Context",
+                uc1_ctx_text: "In competitive eSports, malicious cheating software ruins fairness, frustrating legitimate players and causing massive financial losses due to player churn.",
+                uc1_data_title: "📊 Required Data",
+                uc1_data_list: "<li>Mouse angular speed and crosshair tracking precision.</li><li>Headshot accuracy percentage.</li><li>Millisecond reaction times upon enemy spawn.</li><li>In-game movement trajectories and map coordinates.</li>",
+                uc1_m1_title: "🤖 Machine Learning Type",
+                uc1_m1_text: "<strong>Supervised Learning (Classification)</strong> & Anomaly Detection.",
+                uc1_m2_title: "🔮 Model Objective",
+                uc1_m2_text: "Classify real-time match telemetry as <em>'Organic Human'</em> or <em>'Anomalous Bot (CHEAT)'</em>.",
+                uc1_m3_title: "💡 Potential Benefit",
+                uc1_m3_text: "Automated instant suspension before malicious cheaters impact global competitive leaderboards.",
+                uc1_ex_title: "📌 Practical Example",
+                uc1_ex_text: "The model evaluates player telemetry during a FPS shooter match. It flags 8 consecutive headshots in 0.15 seconds with zero line-of-sight visibility. Comparing this against human performance baselines, it computes a <strong>99.4% cheat probability</strong> and triggers an automated temporary ban.",
+
+                // Caso de Uso 2 (Mantenimiento Predictivo Data Centers)
+                uc2_badge: "Use Case 2 — Cloud & Infrastructure",
+                uc2_title: "Predictive Maintenance in Render Data Centers",
+                uc2_subtitle: "Anticipating critical hardware failures (GPUs/CPUs) across cloud rendering farms and server infrastructure.",
+                uc2_ctx_title: "⚙️ Problem Context",
+                uc2_ctx_text: "Game development studios and cloud gaming platforms operate thousands of servers 24/7. Sudden GPU hardware failures during high-load render jobs lead to server downtime and data loss.",
+                uc2_data_title: "📈 Required Data",
+                uc2_data_list: "<li>Core temperature (°C) and fan RPM speeds.</li><li>Voltage fluctuations and power consumption (Watts).</li><li>Accumulated operating hours under full load.</li><li>Memory error rates logged in VRAM.</li>",
+                uc2_m1_title: "🤖 Machine Learning Type",
+                uc2_m1_text: "<strong>Supervised Learning (Regression)</strong>.",
+                uc2_m2_title: "🔮 Model Objective",
+                uc2_m2_text: "Predict the <strong>Remaining Useful Life (RUL)</strong> in operating hours before a hardware component overheats or fails.",
+                uc2_m3_title: "💡 Potential Benefit",
+                uc2_m3_text: "Minimizes unplanned downtime and optimizes hardware replacement schedules.",
+                uc2_ex_title: "📌 Practical Example",
+                uc2_ex_text: "A rack sensor registers thermal spikes reaching 88°C coupled with fan efficiency loss on GPU #42. The model predicts hardware failure within <strong>36 hours</strong>, automatically rerouting active workloads and alerting technicians for proactive replacement.",
+
+                // Vista Conceptos de Regresión Lineal
+                regc_title: "Linear Regression Concepts",
+                regc_sub1: "What is Linear Regression?",
+                regc_p1: "Linear Regression is a supervised learning algorithm that models the mathematical relationship between an independent input variable ($X$) and a continuous dependent target variable ($Y$) using a straight regression line.",
+                regc_varx_title: "Independent Variable (X):",
+                regc_varx_desc: "The input predictor factor (e.g., Age of the mobile phone in <strong>months</strong>).",
+                regc_vary_title: "Dependent Variable (Y):",
+                regc_vary_desc: "The output target to predict (e.g., Estimated market price in <strong>COP</strong>).",
+                regc_sub2: "Key Elements",
+                regc_list: "<li><strong>Relationship between variables:</strong> Analyzes how the dependent variable changes as the independent variable varies.</li><li><strong>Regression line:</strong> The best-fit trend line calculated to minimize prediction errors across all data points.</li><li><strong>Prediction:</strong> Calculating expected values for new unseen inputs based on the trained regression line.</li>"
+            },
+            es: {
+                // Navegación
+                nav_home: "Inicio",
+                nav_ml: "Aprendizaje Automático",
+                nav_concepts: "Conceptos",
+                nav_types: "Tipos de Aprendizaje",
+                nav_usecases: "Casos de Uso",
+                nav_uc1: "Caso de Uso 1",
+                nav_uc2: "Caso de Uso 2",
+                nav_uc3: "Caso de Uso 3",
+                nav_uc4: "Caso de Uso 4",
+                nav_supervised: "Supervisado",
+                nav_linreg: "Regresión Lineal",
+                nav_app: "Aplicación Práctica",
+                footer_text: "© 2026 Data with Roots — Todos los derechos reservados.",
+
+                // Vista Home
+                home_title: "Bienvenido a Data with Roots",
+                home_desc: "Una aplicación web interactiva diseñada para predecir el precio de celulares usados en función de su antigüedad en meses.",
+                home_btn_explore: "Explorar Conceptos de ML",
+                home_btn_predict: "Probar Modelo Predictivo",
+
+                // Vista ML Concepts
+                concepts_title: "Conceptos Fundamentales de Machine Learning",
+                concepts_c1_title: "¿Qué es el Aprendizaje Automático?",
+                concepts_c1_text: "El Aprendizaje Automático es una rama de la Inteligencia Artificial que permite a los sistemas informáticos aprender y mejorar automáticamente a partir de la experiencia sin ser programados explícitamente.",
+                concepts_c2_title: "Propósito Principal",
+                concepts_c2_text: "Identificar patrones subyacentes en datos históricos para realizar predicciones, clasificaciones o descubrimientos automatizados sobre datos nuevos.",
+                concepts_c3_title: "Relación: Datos → Entrenamiento → Modelo → Predicciones",
+                concepts_c3_text: "Los <strong>Datos</strong> en bruto alimentan el algoritmo de <strong>Entrenamiento</strong>, ajustando parámetros matemáticos para construir un <strong>Modelo</strong> optimizado que genera <strong>Predicciones</strong> confiables.",
+                concepts_c3_alert: "<strong>Importancia de los Datos:</strong> Sin datos de alta calidad, limpios y representativos, los modelos de Aprendizaje Automático no pueden aprender patrones válidos.",
+
+                // Caso de Uso 1 (Anti-Cheat)
+                uc1_badge: "Caso de Uso 1 — Videojuegos y Tecnología",
+                uc1_title: "Detección Anti-Trampas Predictiva en Juegos Multijugador",
+                uc1_subtitle: "Uso de Machine Learning para identificar jugadores que usan programas no autorizados (Aimbots, Wallhacks) en juegos competitivos online.",
+                uc1_ctx_title: "🎯 Contexto del Problema",
+                uc1_ctx_text: "En los eSports competitivos, el software de trampas destruye la equidad del juego, frustrando a los usuarios legítimos y causando pérdidas financieras masivas por abandono.",
+                uc1_data_title: "📊 Datos Requeridos",
+                uc1_data_list: "<li>Velocidad angular del mouse y precisión del puntero.</li><li>Porcentaje de precisión de disparos a la cabeza (Headshots).</li><li>Tiempos de reacción en milisegundos tras la aparición del enemigo.</li><li>Trayectorias de movimiento en el juego y coordenadas del mapa.</li>",
+                uc1_m1_title: "🤖 Tipo de Machine Learning",
+                uc1_m1_text: "<strong>Aprendizaje Supervisado (Clasificación)</strong> y Detección de Anomalías.",
+                uc1_m2_title: "🔮 Objetivo del Modelo",
+                uc1_m2_text: "Clasificar la telemetría de la partida en tiempo real como <em>'Humano Orgánico'</em> o <em>'Bot Anómalo (TRAMPA)'</em>.",
+                uc1_m3_title: "💡 Beneficio Potencial",
+                uc1_m3_text: "Suspensión automática e instantánea antes de que los tramposos afecten las tablas de clasificación globales.",
+                uc1_ex_title: "📌 Ejemplo Práctico",
+                uc1_ex_text: "El modelo evalúa la telemetría durante una partida FPS. Detecta 8 disparos a la cabeza consecutivos en 0.15 segundos sin visibilidad previa. Al compararlo con los patrones humanos, calcula un <strong>99.4% de probabilidad de trampa</strong> e inicia una suspensión temporal automática.",
+
+                // Caso de Uso 2 (Mantenimiento Predictivo Data Centers)
+                uc2_badge: "Caso de Uso 2 — Nube e Infraestructura",
+                uc2_title: "Mantenimiento Predictivo en Data Centers de Renderizado",
+                uc2_subtitle: "Anticipación de fallas críticas de hardware (GPUs/CPUs) en granjas de procesamiento en la nube.",
+                uc2_ctx_title: "⚙️ Contexto del Problema",
+                uc2_ctx_text: "Los estudios de videojuegos y plataformas cloud operan miles de servidores 24/7. Las fallas repentinas en GPUs causan interrupciones no planificadas y pérdida de información.",
+                uc2_data_title: "📈 Datos Requeridos",
+                uc2_data_list: "<li>Temperatura del procesador (°C) y velocidad RPM del ventilador.</li><li>Variaciones de voltaje y consumo de energía (Watts).</li><li>Horas acumuladas de uso continuo a máxima capacidad.</li><li>Tasa de errores de memoria registrados en VRAM.</li>",
+                uc2_m1_title: "🤖 Tipo de Machine Learning",
+                uc2_m1_text: "<strong>Aprendizaje Supervisado (Regresión)</strong>.",
+                uc2_m2_title: "🔮 Objetivo del Modelo",
+                uc2_m2_text: "Predecir la <strong>Vida Útil Restante (RUL)</strong> en horas antes de que un componente falle.",
+                uc2_m3_title: "💡 Beneficio Potencial",
+                uc2_m3_text: "Minimiza el tiempo de inactividad no planificado y optimiza los calendarios de sustitución de piezas.",
+                uc2_ex_title: "📌 Ejemplo Práctico",
+                uc2_ex_text: "El sensor del servidor registra picos de 88°C y pérdida de eficiencia en la GPU #42. El modelo predice una falla en <strong>36 horas</strong>, desviando el procesamiento y alertando al equipo para un reemplazo preventivo.",
+
+                // Vista Conceptos de Regresión Lineal
+                regc_title: "Conceptos de Regresión Lineal",
+                regc_sub1: "¿Qué es la Regresión Lineal?",
+                regc_p1: "La Regresión Lineal es un algoritmo de aprendizaje supervisado que modela la relación matemática entre una variable de entrada independiente ($X$) y una variable objetivo continua dependiente ($Y$) mediante una recta de regresión.",
+                regc_varx_title: "Variable Independiente (X):",
+                regc_varx_desc: "El factor predictivo de entrada (ej. Antigüedad del celular en <strong>meses</strong>).",
+                regc_vary_title: "Variable Dependiente (Y):",
+                regc_vary_desc: "El objetivo a predecir (ej. Precio estimado de mercado en <strong>COP</strong>).",
+                regc_sub2: "Elementos Clave",
+                regc_list: "<li><strong>Relación entre variables:</strong> Analiza cómo cambia la variable dependiente al variar la variable independiente.</li><li><strong>Línea de regresión:</strong> La línea de tendencia de mejor ajuste calculada para minimizar los errores sobre todos los datos.</li><li><strong>Predicción:</strong> Cálculo de valores esperados ante nuevas entradas utilizando la recta ajustada.</li>"
+            }
+        };
+
+        // Función de conmutación del estado persistente
+        function setLanguage(lang) {
+            localStorage.setItem('preferred_lang', lang);
+            updateUI(lang);
+        }
+
+        // Iteración sobre nodos declarativos con atributo data-i18n
+        function updateUI(lang) {
+            const flagElem = document.getElementById('currentLangFlag');
+            const textElem = document.getElementById('currentLangText');
+            
+            if (lang === 'es') {
+                if (flagElem) flagElem.textContent = '🇨🇴';
+                if (textElem) textElem.textContent = 'Español';
+            } else {
+                if (flagElem) flagElem.textContent = '🇺🇸';
+                if (textElem) textElem.textContent = 'English';
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.innerHTML = translations[lang][key];
+                }
+            });
+
+            window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
+        }
+
+        // Inicialización al completar el parseo del DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred_lang') || 'en';
+            updateUI(savedLang);
+        });
+
+        // Ejecución inmediata para evitar parpadeos visuales
+        const initialLang = localStorage.getItem('preferred_lang') || 'en';
+        updateUI(initialLang);
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

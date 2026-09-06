@@ -1,0 +1,45 @@
+<!-- Herencia del diseño base estandarizado -->
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Título principal vinculado al diccionario mediante data-i18n -->
+<h2 class="mb-4 text-dark border-bottom pb-2" data-i18n="concepts_title">Fundamental Machine Learning Concepts</h2>
+
+<!-- Grid responsivo de Bootstrap 5 -->
+<div class="row g-4">
+    <!-- Tarjeta 1: Definición de Machine Learning -->
+    <div class="col-md-6">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold" data-i18n="concepts_c1_title">What is Machine Learning?</h5>
+                <p class="card-text" data-i18n="concepts_c1_text">Machine Learning is a branch of Artificial Intelligence that enables computer systems to automatically learn and improve from experience without being explicitly programmed.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta 2: Propósito principal -->
+    <div class="col-md-6">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold" data-i18n="concepts_c2_title">Main Purpose</h5>
+                <p class="card-text" data-i18n="concepts_c2_text">To identify underlying patterns within historical data in order to make accurate predictions, classifications, or automated insights on new, unseen data.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta 3: Flujo de datos y alerta informativa -->
+    <div class="col-md-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold" data-i18n="concepts_c3_title">Relationship: Data → Training → Model → Predictions</h5>
+                <p data-i18n="concepts_c3_text">Raw <strong>Data</strong> feeds the <strong>Training</strong> algorithm, adjusting mathematical parameters to build an optimized <strong>Model</strong> that outputs reliable <strong>Predictions</strong>.</p>
+                
+                <!-- Componente Alert estilizado -->
+                <div class="alert alert-info mb-0" data-i18n="concepts_c3_alert">
+                    <strong>Importance of Data:</strong> Without high-quality, clean, and representative data, Machine Learning models cannot learn valid patterns.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

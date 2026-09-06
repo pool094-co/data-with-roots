@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4 text-dark border-bottom pb-2" id="types-title">Main Types of Machine Learning</h2>
+
+<!-- Componente Acordeón interactivo de Bootstrap 5 con despliegue animado -->
+<div class="accordion shadow-sm" id="accordionML">
+  
+  <!-- Sección 1: Aprendizaje Supervisado -->
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button fw-bold text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" id="btn-type1">
+        1. Supervised Learning
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionML">
+      <div class="accordion-body" id="body-type1">
+        <p><strong>Definition:</strong> The algorithm is trained on a labeled dataset where correct answers (ground truth) are provided.</p>
+        <p><strong>Main Characteristics:</strong> Requires labeled inputs/outputs. Directly measures prediction accuracy against target labels.</p>
+        <p><strong>Problems Solved:</strong> Regression (predicting continuous numerical values) and Classification (predicting categorical labels).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección 2: Aprendizaje No Supervisado -->
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed fw-bold text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" id="btn-type2">
+        2. Unsupervised Learning
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionML">
+      <div class="accordion-body" id="body-type2">
+        <p><strong>Definition:</strong> The model analyzes unlabeled data to autonomously discover hidden structures, groupings, or patterns.</p>
+        <p><strong>Main Characteristics:</strong> No pre-defined target variables. Focuses on intrinsic data relationships.</p>
+        <p><strong>Problems Solved:</strong> Clustering, Anomaly Detection, and Dimensionality Reduction.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección 3: Aprendizaje por Refuerzo -->
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed fw-bold text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" id="btn-type3">
+        3. Reinforcement Learning
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionML">
+      <div class="accordion-body" id="body-type3">
+        <p><strong>Definition:</strong> An autonomous agent learns decision-making through trial and error by interacting with a dynamic environment.</p>
+        <p><strong>Main Characteristics:</strong> Guided by a system of numerical rewards and penalties.</p>
+        <p><strong>Problems Solved:</strong> Robotics, Video Game AI, Autonomous Navigation, and Decision Optimization.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Traducción bilingüe dinámicas inyectando marcas HTML estructuradas en el acordeón -->
+<script>
+    const mlTypesTexts = {
+        en: {
+            title: "Main Types of Machine Learning",
+            btn1: "1. Supervised Learning",
+            body1: "<p><strong>Definition:</strong> The algorithm is trained on a labeled dataset where correct answers (ground truth) are provided.</p><p><strong>Main Characteristics:</strong> Requires labeled inputs/outputs. Directly measures prediction accuracy against target labels.</p><p><strong>Problems Solved:</strong> Regression (predicting continuous numerical values) and Classification (predicting categorical labels).</p>",
+            btn2: "2. Unsupervised Learning",
+            body2: "<p><strong>Definition:</strong> The model analyzes unlabeled data to autonomously discover hidden structures, groupings, or patterns.</p><p><strong>Main Characteristics:</strong> No pre-defined target variables. Focuses on intrinsic data relationships.</p><p><strong>Problems Solved:</strong> Clustering, Anomaly Detection, and Dimensionality Reduction.</p>",
+            btn3: "3. Reinforcement Learning",
+            body3: "<p><strong>Definition:</strong> An autonomous agent learns decision-making through trial and error by interacting with a dynamic environment.</p><p><strong>Main Characteristics:</strong> Guided by a system of numerical rewards and penalties.</p><p><strong>Problems Solved:</strong> Robotics, Video Game AI, Autonomous Navigation, and Decision Optimization.</p>"
+        },
+        es: {
+            title: "Tipos Principales de Machine Learning",
+            btn1: "1. Aprendizaje Supervisado",
+            body1: "<p><strong>Definición:</strong> El algoritmo se entrena sobre un conjunto de datos etiquetado donde se proporcionan las respuestas correctas.</p><p><strong>Características Principales:</strong> Requiere entradas y salidas etiquetadas. Mide directamente la precisión respecto a las etiquetas objetivo.</p><p><strong>Problemas que Resuelve:</strong> Regresión (predicción de valores numéricos continuos) y Clasificación (predicción de categorías).</p>",
+            btn2: "2. Aprendizaje No Supervisado",
+            body2: "<p><strong>Definición:</strong> El modelo analiza datos no etiquetados para descubrir de forma autónoma estructuras, agrupaciones o patrones ocultos.</p><p><strong>Características Principales:</strong> Sin variables objetivo predefinidas. Se enfoca en las relaciones intrínsecas de los datos.</p><p><strong>Problemas que Resuelve:</strong> Agrupamiento (Clustering), Detección de Anomalías y Reducción de Dimensionalidad.</p>",
+            btn3: "3. Aprendizaje por Refuerzo",
+            body3: "<p><strong>Definición:</strong> Un agente autónomo aprende a tomar decisiones mediante prueba y error interactuando con un entorno dinámico.</p><p><strong>Características Principales:</strong> Guiado por un sistema de recompensas y penalizaciones numéricas.</p><p><strong>Problemas que Resuelve:</strong> Robótica, IA en Videojuegos, Navegación Autónoma y Optimización de Decisiones.</p>"
+        }
+    };
+
+    function applyTypesLanguage(lang) {
+        const t = mlTypesTexts[lang] || mlTypesTexts.en;
+        document.getElementById('types-title').textContent = t.title;
+        document.getElementById('btn-type1').textContent = t.btn1;
+        document.getElementById('body-type1').innerHTML = t.body1;
+        document.getElementById('btn-type2').textContent = t.btn2;
+        document.getElementById('body-type2').innerHTML = t.body2;
+        document.getElementById('btn-type3').textContent = t.btn3;
+        document.getElementById('body-type3').innerHTML = t.body3;
+    }
+
+    window.addEventListener('languageChanged', (e) => applyTypesLanguage(e.detail.lang));
+    document.addEventListener('DOMContentLoaded', () => applyTypesLanguage(localStorage.getItem('preferred_lang') || 'en'));
+</script>
+{% endblock %}
