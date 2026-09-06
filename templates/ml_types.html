@@ -2,10 +2,7 @@
 {% block content %}
 <h2 class="mb-4 text-dark border-bottom pb-2" id="types-title">Main Types of Machine Learning</h2>
 
-<!-- Componente Acordeón interactivo de Bootstrap 5 con despliegue animado -->
 <div class="accordion shadow-sm" id="accordionML">
-  
-  <!-- Sección 1: Aprendizaje Supervisado -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button fw-bold text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" id="btn-type1">
@@ -20,8 +17,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Sección 2: Aprendizaje No Supervisado -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button collapsed fw-bold text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" id="btn-type2">
@@ -36,8 +31,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Sección 3: Aprendizaje por Refuerzo -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button collapsed fw-bold text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" id="btn-type3">
@@ -52,12 +45,10 @@
       </div>
     </div>
   </div>
-
 </div>
 {% endblock %}
 
 {% block scripts %}
-<!-- Traducción bilingüe dinámicas inyectando marcas HTML estructuradas en el acordeón -->
 <script>
     const mlTypesTexts = {
         en: {
@@ -82,16 +73,17 @@
 
     function applyTypesLanguage(lang) {
         const t = mlTypesTexts[lang] || mlTypesTexts.en;
-        document.getElementById('types-title').textContent = t.title;
-        document.getElementById('btn-type1').textContent = t.btn1;
-        document.getElementById('body-type1').innerHTML = t.body1;
-        document.getElementById('btn-type2').textContent = t.btn2;
-        document.getElementById('body-type2').innerHTML = t.body2;
-        document.getElementById('btn-type3').textContent = t.btn3;
-        document.getElementById('body-type3').innerHTML = t.body3;
+        if (document.getElementById('types-title')) document.getElementById('types-title').textContent = t.title;
+        if (document.getElementById('btn-type1')) document.getElementById('btn-type1').textContent = t.btn1;
+        if (document.getElementById('body-type1')) document.getElementById('body-type1').innerHTML = t.body1;
+        if (document.getElementById('btn-type2')) document.getElementById('btn-type2').textContent = t.btn2;
+        if (document.getElementById('body-type2')) document.getElementById('body-type2').innerHTML = t.body2;
+        if (document.getElementById('btn-type3')) document.getElementById('btn-type3').textContent = t.btn3;
+        if (document.getElementById('body-type3')) document.getElementById('body-type3').innerHTML = t.body3;
     }
 
     window.addEventListener('languageChanged', (e) => applyTypesLanguage(e.detail.lang));
     document.addEventListener('DOMContentLoaded', () => applyTypesLanguage(localStorage.getItem('preferred_lang') || 'en'));
+    applyTypesLanguage(localStorage.getItem('preferred_lang') || 'en');
 </script>
 {% endblock %}

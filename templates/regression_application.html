@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<!-- 2 & 3. Variables y Dataset -->
+<!-- 2 y 3. Variables y Metadatos del Dataset -->
 <div class="row mb-4 g-3">
     <div class="col-md-6">
         <div class="card border-0 shadow-sm h-100">
@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<!-- 4. Visualización -->
+<!-- 4. Renderizado del Gráfico Matplotlib en Base64 -->
 <div class="card mb-4 border-0 shadow-sm text-center">
     <div class="card-body">
         <h5 class="card-title text-start text-success fw-bold" id="title-plot">4. Data Visualization & Regression Line</h5>
@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<!-- 6. Formulario de Predicción -->
+<!-- 6. Formulario HTTP POST de Predicción -->
 <div class="card border-0 shadow-sm p-3">
     <div class="card-body">
         <h5 class="card-title text-success fw-bold" id="title-form">6. Interactive Prediction Form</h5>
@@ -56,10 +56,12 @@
             <button type="submit" class="btn btn-success" id="btn-submit">Predict Price (COP)</button>
         </form>
 
+        <!-- Bloque de evaluación condicional Jinja2 para mensajes de error -->
         {% if error %}
             <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
         {% endif %}
 
+        <!-- Bloque condicional Jinja2 para despliegue del resultado numérico de la inferencia -->
         {% if result is not none %}
             <div class="alert alert-success mt-4 mb-0">
                 <h3 class="fw-bold mb-1"><span id="lbl-result">Estimated Price:</span> $ {{ result }} COP</h3>
@@ -71,7 +73,9 @@
 {% endblock %}
 
 {% block scripts %}
+<!-- SCRIPT DE MANEJO DE IDIOMA DINÁMICO ESPECÍFICO PARA LA VISTA DE APLICACIÓN -->
 <script>
+    // Objeto contenedor de cadenas multilingües
     const pageTexts = {
         en: {
             appTitle: "Linear Regression - Used Mobile Phone Price Prediction",
@@ -111,6 +115,7 @@
         }
     };
 
+    // Función de actualización de nodos dinámicos de esta plantilla
     function applyPageLanguage(lang) {
         const t = pageTexts[lang] || pageTexts.en;
         document.getElementById('app-title').textContent = t.appTitle;
@@ -134,12 +139,12 @@
         }
     }
 
-    // Escuchar el evento de cambio de idioma
+    // Suscripción al evento personalizado emitido desde base.html
     window.addEventListener('languageChanged', (e) => {
         applyPageLanguage(e.detail.lang);
     });
 
-    // Cargar idioma actual al renderizar la página
+    // Inicialización del idioma al completar la carga del DOM
     document.addEventListener('DOMContentLoaded', () => {
         const currentLang = localStorage.getItem('preferred_lang') || 'en';
         applyPageLanguage(currentLang);
