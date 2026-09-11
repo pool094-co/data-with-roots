@@ -1,0 +1,66 @@
+<!-- ==============================================================================
+     PLANTILLA: logistic_concepts.html
+     DESCRIPCIÓN: Explicación teórica de los fundamentos de Regresión Logística
+     TÉCNICAS: Herencia de plantillas Jinja2, rejilla responsive de Bootstrap 5
+               e internacionalización declarativa mediante atributos data-i18n.
+     ============================================================================== -->
+
+<!-- Herencia de la plantilla base común que contiene el navbar, footer y motor JS de i18n -->
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Título de la vista con atributo data-i18n para traducción dinámica -->
+<h2 class="mb-4 text-dark border-bottom pb-2" data-i18n="logc_title">Binary Logistic Regression Concepts</h2>
+
+<!-- Rejilla estructurada en 2 columnas para organizar los bloques teóricos principales -->
+<div class="row g-4">
+    <!-- Tarjeta 1: Definición del algoritmo de Regresión Logística -->
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <!-- Título y descripción vinculados al diccionario i18n de base.html -->
+                <h5 class="fw-bold text-success" data-i18n="logc_q1">What is Logistic Regression?</h5>
+                <p data-i18n="logc_a1">Logistic Regression is a supervised learning algorithm used to predict the probability of a categorical target outcome based on input features.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta 2: Justificación de por qué es un modelo de Clasificación -->
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-success" data-i18n="logc_q2">Why Classification?</h5>
+                <p data-i18n="logc_a2">Although it uses a mathematical equation similar to linear regression, its output passes through a Sigmoid Function to produce probabilities bounded between 0 and 1, mapping directly into discrete classes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta 3: Concepto de Clasificación Binaria -->
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-primary" data-i18n="logc_q3">What is Binary Classification?</h5>
+                <p data-i18n="logc_a3">A classification task where the target variable has exactly two mutually exclusive outcomes (e.g., 0 = No / 1 = Yes).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta 4: Umbral de decisión (Decision Threshold) -->
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-primary" data-i18n="logc_q4">Classification Threshold</h5>
+                <p data-i18n="logc_a4">The decision boundary (commonly 0.5) used to convert predicted probabilities into definitive class labels.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cuadro comparativo: Diferencia clave entre Regresión Lineal vs Regresión Logística -->
+<div class="card mt-4 border-start border-success border-4 shadow-sm">
+    <div class="card-body">
+        <h5 class="fw-bold text-success" data-i18n="logc_diff_title">Difference: Linear vs Logistic Regression</h5>
+        <p class="mb-0" data-i18n="logc_diff_text">Linear Regression predicts continuous numbers (e.g., prices), whereas Logistic Regression predicts probabilities for categorical outcomes (e.g., buy vs not buy).</p>
+    </div>
+</div>
+{% endblock %}

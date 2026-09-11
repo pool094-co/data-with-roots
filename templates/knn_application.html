@@ -1,0 +1,76 @@
+<!-- ==============================================================================
+     PLANTILLA: knn_application.html
+     DESCRIPCIÓN: Interfaz con etiquetas data-i18n para KNN.
+     ============================================================================== -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4 text-dark border-bottom pb-2" data-i18n="knna_title">K-Nearest Neighbors — Employee Promotion Classifier</h2>
+
+<div class="row g-4 mb-4">
+    <!-- Resumen del Dataset KNN -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-warning text-dark fw-bold" data-i18n="knna_sum_title">1. KNN Dataset Summary</div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><strong>Total Records:</strong> {{ summary.total_records }}</li>
+                    <li class="mb-2"><strong>Train Set (80%):</strong> {{ summary.train_records }}</li>
+                    <li class="mb-2"><strong>Test Set (20%):</strong> {{ summary.test_records }}</li>
+                    <li class="mb-2"><strong>K Neighbors:</strong> K = {{ summary.k_value }}</li>
+                    <li class="mb-2"><strong>Features (X):</strong> 3 Variables</li>
+                    <li><strong>Target (Y):</strong> {{ summary.class_0 }} | {{ summary.class_1 }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario Multivariable -->
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-dark text-white fw-bold" data-i18n="knna_form_title">2. Interactive Multi-Variable Classification Form</div>
+            <div class="card-body">
+                <form method="POST" action="/knn/application">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="experiencia" class="form-label fw-bold" data-i18n="knna_exp_label">Experience (Years):</label>
+                            <input type="number" step="0.1" min="0" max="40" class="form-control" id="experiencia" name="experiencia" value="{{ inputs.experiencia if inputs.experiencia else '' }}" required placeholder="e.g. 5.5">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="puntaje" class="form-label fw-bold" data-i18n="knna_score_label">Tech Score (0-100):</label>
+                            <input type="number" step="0.1" min="0" max="100" class="form-control" id="puntaje" name="puntaje" value="{{ inputs.puntaje if inputs.puntaje else '' }}" required placeholder="e.g. 82.0">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="participacion" class="form-label fw-bold" data-i18n="knna_proj_label">Projects (1-10):</label>
+                            <input type="number" min="1" max="10" class="form-control" id="participacion" name="participacion" value="{{ inputs.participacion if inputs.participacion else '' }}" required placeholder="e.g. 7">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning fw-bold w-100 mt-3" data-i18n="knna_btn">Evaluate Employee Promotion</button>
+                </form>
+
+                {% if prediction %}
+                <div class="alert {{ 'alert-success' if prediction.prediction == 1 else 'alert-secondary' }} mt-3 mb-0">
+                    <h5 class="alert-heading fw-bold">
+                        Result: {{ 'PROMOTED (Class 1)' if prediction.prediction == 1 else 'NOT PROMOTED (Class 0)' }}
+                    </h5>
+                    <p class="mb-0">
+                        KNN Voting Probabilities (K=5): <br>
+                        <strong>Promoted Probability:</strong> {{ prediction.prob_class_1 }}% | 
+                        <strong>Not Promoted Probability:</strong> {{ prediction.prob_class_0 }}%
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráfica de Clustering -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-secondary text-white fw-bold" data-i18n="knna_plot_title">3. Multi-Feature Data Clustering Scatter Plot</div>
+    <div class="card-body text-center">
+        <img src="data:image/png;base64,{{ plot_url }}" class="img-fluid rounded border shadow-sm" alt="KNN Feature Plot">
+    </div>
+</div>
+{% endblock %}

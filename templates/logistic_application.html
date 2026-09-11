@@ -1,0 +1,65 @@
+<!-- ==============================================================================
+     PLANTILLA: logistic_application.html
+     DESCRIPCIÓN: Interfaz con etiquetas data-i18n para Regresión Logística.
+     ============================================================================== -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4 text-dark border-bottom pb-2" data-i18n="loga_title">Logistic Regression — E-commerce Purchase Decision</h2>
+
+<div class="row g-4 mb-4">
+    <!-- Resumen del Dataset -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-success text-white fw-bold" data-i18n="loga_sum_title">1. Dataset Summary</div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><strong>Total Records:</strong> {{ summary.total_records }}</li>
+                    <li class="mb-2"><strong>Train Set (80%):</strong> {{ summary.train_records }} rows</li>
+                    <li class="mb-2"><strong>Test Set (20%):</strong> {{ summary.test_records }} rows</li>
+                    <li class="mb-2"><strong>Feature (X):</strong> Navigation Time (Minutes)</li>
+                    <li><strong>Target (Y):</strong> {{ summary.class_0 }} | {{ summary.class_1 }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Predicción -->
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-dark text-white fw-bold" data-i18n="loga_form_title">2. Interactive Classification Form</div>
+            <div class="card-body">
+                <form method="POST" action="/logistic/application">
+                    <div class="mb-3">
+                        <label for="tiempo_navegacion" class="form-label fw-bold" data-i18n="loga_input_label">User Navigation Time (Minutes):</label>
+                        <input type="number" step="0.1" min="1" max="100" class="form-control" id="tiempo_navegacion" name="tiempo_navegacion" value="{{ time_input if time_input else '' }}" required placeholder="e.g. 35.5">
+                    </div>
+                    <button type="submit" class="btn btn-success fw-bold w-100" data-i18n="loga_btn">Classify Purchase Decision</button>
+                </form>
+
+                {% if prediction %}
+                <div class="alert {{ 'alert-success' if prediction.prediction == 1 else 'alert-warning' }} mt-3 mb-0">
+                    <h5 class="alert-heading fw-bold">
+                        Result: {{ 'BUY (Class 1)' if prediction.prediction == 1 else 'NO BUY / ABANDON (Class 0)' }}
+                    </h5>
+                    <p class="mb-0">
+                        Probabilities evaluated by Sigmoid Model: <br>
+                        <strong>Buy Probability:</strong> {{ prediction.prob_class_1 }}% | 
+                        <strong>Abandon Probability:</strong> {{ prediction.prob_class_0 }}%
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráfica Sigmoide -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-secondary text-white fw-bold" data-i18n="loga_plot_title">3. Data Visualization & Fitted Sigmoid Curve</div>
+    <div class="card-body text-center">
+        <img src="data:image/png;base64,{{ plot_url }}" class="img-fluid rounded border shadow-sm" alt="Logistic Regression Plot">
+    </div>
+</div>
+{% endblock %}

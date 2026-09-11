@@ -1,0 +1,63 @@
+<!-- ==============================================================================
+     PLANTILLA: knn_concepts.html
+     DESCRIPCIÓN: Explicación teórica de K-Nearest Neighbors (KNN), funcionamiento,
+                  distancia euclidiana, ventajas y limitaciones.
+     ============================================================================== -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4 text-dark border-bottom pb-2" data-i18n="knnc_title">K-Nearest Neighbors (KNN) Concepts</h2>
+
+<!-- Fila superior: Definición y Mecanismo de Funcionamiento -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-warning text-dark" data-i18n="knnc_q1">What is K-Nearest Neighbors?</h5>
+                <p data-i18n="knnc_a1">KNN is a non-parametric, instance-based supervised classification algorithm that assigns a new data point to the majority class among its 'K' closest neighbors in feature space.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-warning text-dark" data-i18n="knnc_q2">How does KNN work?</h5>
+                <p data-i18n="knnc_a2">It calculates the distance (typically Euclidean distance) between the new input and all existing training samples, selects the K nearest points, and performs a majority vote.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fila inferior: Análisis comparativo de Ventajas vs Limitaciones -->
+<div class="row g-4">
+    <!-- Ventajas del algoritmo -->
+    <div class="col-md-6">
+        <div class="card h-100 border-start border-success border-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="fw-bold text-success" data-i18n="knnc_adv_title">Main Advantages</h5>
+                <ul class="mb-0" data-i18n="knnc_adv_list">
+                    <li>Simple to understand and implement.</li>
+                    <li>No explicit training phase required (Lazy Learning).</li>
+                    <li>Naturally handles multi-feature input spaces.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Limitaciones conocidas -->
+    <div class="col-md-6">
+        <div class="card h-100 border-start border-danger border-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="fw-bold text-danger" data-i18n="knnc_lim_title">Limitations</h5>
+                <ul class="mb-0" data-i18n="knnc_lim_list">
+                    <li>Sensitive to feature scaling (requires normalization).</li>
+                    <li>Computationally expensive with very large datasets.</li>
+                    <li>Sensitive to irrelevant features or noise.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

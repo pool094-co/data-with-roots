@@ -1,0 +1,68 @@
+<!-- ==============================================================================
+     PLANTILLA: knn_metrics.html
+     DESCRIPCIÓN: Presentación de métricas de K-Nearest Neighbors con
+                  traducción dinámica vinculada al diccionario i18n de base.html.
+     ============================================================================== -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4 text-dark border-bottom pb-2" data-i18n="knnm_title">K-Nearest Neighbors — Evaluation Metrics (20% Test Set)</h2>
+
+<!-- Tarjetas de Métricas con data-i18n -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card border-0 bg-primary text-white shadow-sm text-center py-3">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-bold" data-i18n="metric_accuracy">Accuracy</h6>
+                <h2 class="display-4 fw-bold mb-0">{{ metrics.accuracy }}%</h2>
+                <small data-i18n="metric_acc_desc">Percentage of correct total classifications</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card border-0 bg-success text-white shadow-sm text-center py-3">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-bold" data-i18n="metric_precision">Precision</h6>
+                <h2 class="display-4 fw-bold mb-0">{{ metrics.precision }}%</h2>
+                <small data-i18n="metric_prec_desc">Proportion of positive identifications that were correct</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Matriz de Confusión traducible para KNN -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white fw-bold" data-i18n="cm_title">Confusion Matrix Details</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th colspan="2" rowspan="2" class="align-middle" data-i18n="cm_title">Confusion Matrix</th>
+                        <th colspan="2" data-i18n="cm_actual">Actual Class</th>
+                    </tr>
+                    <tr>
+                        <th data-i18n="knnm_c1">Class 1 (Promoted)</th>
+                        <th data-i18n="knnm_c0">Class 0 (Not Promoted)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th rowspan="2" class="table-light align-middle" data-i18n="cm_predicted">Predicted Class</th>
+                        <th data-i18n="knnm_c1">Class 1 (Promoted)</th>
+                        <td class="table-success fw-bold fs-5"><span data-i18n="cm_tp">True Positive (TP)</span>: {{ metrics.tp }}</td>
+                        <td class="table-warning fw-bold fs-5"><span data-i18n="cm_fp">False Positive (FP)</span>: {{ metrics.fp }}</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="knnm_c0">Class 0 (Not Promoted)</th>
+                        <td class="table-danger fw-bold fs-5"><span data-i18n="cm_fn">False Negative (FN)</span>: {{ metrics.fn }}</td>
+                        <td class="table-success fw-bold fs-5"><span data-i18n="cm_tn">True Negative (TN)</span>: {{ metrics.tn }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,12 +1,18 @@
+<!-- ==============================================================================
+     PLANTILLA: regression_application.html
+     DESCRIPCIÓN: Interfaz interactiva de Regresión Lineal Simple integrada al 
+                  motor central de traducción data-i18n de base.html.
+     ============================================================================== -->
+
 {% extends 'base.html' %}
 {% block content %}
-<h2 class="mb-4 border-bottom pb-2" id="app-title">Linear Regression - Used Mobile Phone Price Prediction</h2>
+<h2 class="mb-4 border-bottom pb-2" data-i18n="regapp_title">Linear Regression - Used Mobile Phone Price Prediction</h2>
 
 <!-- 1. Contexto del Problema -->
 <div class="card mb-4 border-0 shadow-sm">
     <div class="card-body">
-        <h5 class="card-title text-success fw-bold" id="title-context">1. Problem Context</h5>
-        <p class="mb-0" id="text-context">We analyze the commercial depreciation phenomenon in the secondary smartphone market to estimate a mobile phone's resale monetary value based on its usage duration in months.</p>
+        <h5 class="card-title text-success fw-bold" data-i18n="regapp_ctx_title">1. Problem Context</h5>
+        <p class="mb-0" data-i18n="regapp_ctx_text">We analyze the commercial depreciation phenomenon in the secondary smartphone market to estimate a mobile phone's resale monetary value based on its usage duration in months.</p>
     </div>
 </div>
 
@@ -15,8 +21,8 @@
     <div class="col-md-6">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h5 class="card-title text-success fw-bold" id="title-vars">2. Model Variables</h5>
-                <ul id="list-vars">
+                <h5 class="card-title text-success fw-bold" data-i18n="regapp_var_title">2. Model Variables</h5>
+                <ul data-i18n="regapp_var_list">
                     <li><strong>Independent Variable (X):</strong> Age (Quantitative, measured in <strong>Months</strong>).</li>
                     <li><strong>Dependent Variable (Y):</strong> Price (Quantitative, measured in <strong>COP - Colombian Pesos</strong>).</li>
                 </ul>
@@ -26,10 +32,10 @@
     <div class="col-md-6">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h5 class="card-title text-success fw-bold" id="title-dataset">3. Dataset Information</h5>
-                <p class="mb-1"><strong id="lbl-records">Number of Records:</strong> {{ num_records }} rows.</p>
-                <p class="mb-1"><strong id="lbl-source">Source:</strong> Historical used smartphone market transaction dataset.</p>
-                <p class="mb-0"><strong id="lbl-currency">Currency:</strong> COP ($ Colombian Pesos).</p>
+                <h5 class="card-title text-success fw-bold" data-i18n="regapp_data_title">3. Dataset Information</h5>
+                <p class="mb-1"><strong data-i18n="regapp_data_rec">Number of Records:</strong> {{ num_records }} rows.</p>
+                <p class="mb-1" data-i18n="regapp_data_src"><strong>Source:</strong> Historical used smartphone market transaction dataset.</p>
+                <p class="mb-0" data-i18n="regapp_data_cur"><strong>Currency:</strong> COP ($ Colombian Pesos).</p>
             </div>
         </div>
     </div>
@@ -38,7 +44,7 @@
 <!-- 4. Renderizado del Gráfico Matplotlib en Base64 -->
 <div class="card mb-4 border-0 shadow-sm text-center">
     <div class="card-body">
-        <h5 class="card-title text-start text-success fw-bold" id="title-plot">4. Data Visualization & Regression Line</h5>
+        <h5 class="card-title text-start text-success fw-bold" data-i18n="regapp_plot_title">4. Data Visualization & Regression Line</h5>
         <img src="data:image/png;base64,{{ plot_url }}" class="img-fluid rounded border mt-2" alt="Scatter Plot and Regression Line">
     </div>
 </div>
@@ -46,108 +52,26 @@
 <!-- 6. Formulario HTTP POST de Predicción -->
 <div class="card border-0 shadow-sm p-3">
     <div class="card-body">
-        <h5 class="card-title text-success fw-bold" id="title-form">6. Interactive Prediction Form</h5>
+        <h5 class="card-title text-success fw-bold" data-i18n="regapp_form_title">6. Interactive Prediction Form</h5>
         
         <form method="post" action="/LinearRegression/" class="mt-3">
             <div class="mb-3">
-                <label for="antiguedad" class="form-label" id="lbl-input">Enter Phone Age (in months):</label>
-                <input type="number" step="any" class="form-control" name="antiguedad" id="antiguedad" required placeholder="Example: 18">
+                <label for="antiguedad" class="form-label" data-i18n="regapp_form_lbl">Enter Phone Age (in months):</label>
+                <input type="number" step="any" class="form-control" name="antiguedad" id="antiguedad" required value="{{ antiguedad if antiguedad else '' }}">
             </div>
-            <button type="submit" class="btn btn-success" id="btn-submit">Predict Price (COP)</button>
+            <button type="submit" class="btn btn-success" data-i18n="regapp_form_btn">Predict Price (COP)</button>
         </form>
 
-        <!-- Bloque de evaluación condicional Jinja2 para mensajes de error -->
         {% if error %}
             <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
         {% endif %}
 
-        <!-- Bloque condicional Jinja2 para despliegue del resultado numérico de la inferencia -->
         {% if result is not none %}
             <div class="alert alert-success mt-4 mb-0">
-                <h3 class="fw-bold mb-1"><span id="lbl-result">Estimated Price:</span> $ {{ result }} COP</h3>
-                <p class="mb-0"><span id="lbl-pred-for">Predicted value for a mobile phone with</span> <strong>{{ antiguedad }}</strong> <span id="lbl-months">months of usage.</span></p>
+                <h3 class="fw-bold mb-1"><span data-i18n="regapp_res_title">Estimated Price:</span> $ {{ result }} COP</h3>
+                <p class="mb-0"><span data-i18n="regapp_res_lbl1">Predicted value for a mobile phone with</span> <strong>{{ antiguedad }}</strong> <span data-i18n="regapp_res_lbl2">months of usage.</span></p>
             </div>
         {% endif %}
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<!-- SCRIPT DE MANEJO DE IDIOMA DINÁMICO ESPECÍFICO PARA LA VISTA DE APLICACIÓN -->
-<script>
-    // Objeto contenedor de cadenas multilingües
-    const pageTexts = {
-        en: {
-            appTitle: "Linear Regression - Used Mobile Phone Price Prediction",
-            titleContext: "1. Problem Context",
-            textContext: "We analyze the commercial depreciation phenomenon in the secondary smartphone market to estimate a mobile phone's resale monetary value based on its usage duration in months.",
-            titleVars: "2. Model Variables",
-            listVars: "<li><strong>Independent Variable (X):</strong> Age (Quantitative, measured in <strong>Months</strong>).</li><li><strong>Dependent Variable (Y):</strong> Price (Quantitative, measured in <strong>COP - Colombian Pesos</strong>).</li>",
-            titleDataset: "3. Dataset Information",
-            lblRecords: "Number of Records:",
-            lblSource: "Source:",
-            lblCurrency: "Currency:",
-            titlePlot: "4. Data Visualization & Regression Line",
-            titleForm: "6. Interactive Prediction Form",
-            lblInput: "Enter Phone Age (in months):",
-            btnSubmit: "Predict Price (COP)",
-            lblResult: "Estimated Price:",
-            lblPredFor: "Predicted value for a mobile phone with",
-            lblMonths: "months of usage."
-        },
-        es: {
-            appTitle: "Regresión Lineal - Predicción de Precio de Celulares Usados",
-            titleContext: "1. Contexto del Problema",
-            textContext: "Analizamos la depreciación comercial en el mercado de smartphones usados para estimar el valor monetario de reventa de un celular según su antigüedad en meses.",
-            titleVars: "2. Variables del Modelo",
-            listVars: "<li><strong>Variable Independiente (X):</strong> Antigüedad (Cuantitativa, medida en <strong>Meses</strong>).</li><li><strong>Variable Dependiente (Y):</strong> Precio (Cuantitativo, medido en <strong>COP - Pesos Colombianos</strong>).</li>",
-            titleDataset: "3. Información del Conjunto de Datos",
-            lblRecords: "Número de Registros:",
-            lblSource: "Fuente:",
-            lblCurrency: "Moneda:",
-            titlePlot: "4. Visualización de Datos y Línea de Regresión",
-            titleForm: "6. Formulario de Predicción Interactivo",
-            lblInput: "Ingrese la antigüedad del celular (en meses):",
-            btnSubmit: "Calcular Precio (COP)",
-            lblResult: "Precio Estimado:",
-            lblPredFor: "Valor predicho para un celular con",
-            lblMonths: "meses de uso."
-        }
-    };
-
-    // Función de actualización de nodos dinámicos de esta plantilla
-    function applyPageLanguage(lang) {
-        const t = pageTexts[lang] || pageTexts.en;
-        document.getElementById('app-title').textContent = t.appTitle;
-        document.getElementById('title-context').textContent = t.titleContext;
-        document.getElementById('text-context').textContent = t.textContext;
-        document.getElementById('title-vars').textContent = t.titleVars;
-        document.getElementById('list-vars').innerHTML = t.listVars;
-        document.getElementById('title-dataset').textContent = t.titleDataset;
-        document.getElementById('lbl-records').textContent = t.lblRecords;
-        document.getElementById('lbl-source').textContent = t.lblSource;
-        document.getElementById('lbl-currency').textContent = t.lblCurrency;
-        document.getElementById('title-plot').textContent = t.titlePlot;
-        document.getElementById('title-form').textContent = t.titleForm;
-        document.getElementById('lbl-input').textContent = t.lblInput;
-        document.getElementById('btn-submit').textContent = t.btnSubmit;
-        
-        if (document.getElementById('lbl-result')) {
-            document.getElementById('lbl-result').textContent = t.lblResult;
-            document.getElementById('lbl-pred-for').textContent = t.lblPredFor;
-            document.getElementById('lbl-months').textContent = t.lblMonths;
-        }
-    }
-
-    // Suscripción al evento personalizado emitido desde base.html
-    window.addEventListener('languageChanged', (e) => {
-        applyPageLanguage(e.detail.lang);
-    });
-
-    // Inicialización del idioma al completar la carga del DOM
-    document.addEventListener('DOMContentLoaded', () => {
-        const currentLang = localStorage.getItem('preferred_lang') || 'en';
-        applyPageLanguage(currentLang);
-    });
-</script>
 {% endblock %}
