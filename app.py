@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
 import LinearRegressionPhone  # Importación del módulo local que contiene la lógica del modelo y dataset
 import LogisticRegressionSleep  # Importación del módulo local de Regresión Logística
+import KnnRegression # Importación del módulo local de KNN
+modelo_knn, escalador_knn = KnnRegression.entrenar_modelo_knn()
+
 
 # Instanciación de la aplicación web en Flask
 app = Flask(__name__)
@@ -129,3 +132,23 @@ def logistic_metrics():
 # Punto de entrada para la ejecución del servidor de desarrollo local
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+# =========================================================
+# KNN
+# =========================================================
+@app.route('/predict_phone', methods=['POST']) # Ajusta el nombre de tu ruta si es diferente
+def predict_phone():
+    ram = float(request.form['ram']) # Capturar los datos numéricos que ingresó el usuario en el formulario web
+    almacenamiento = float(request.form['almacenamiento'])
+    bateria = float(request.form['bateria'])
+    
+    caracteristicas_usuario = [[ram, almacenamiento, bateria]] 
+
+    datos_escalados = escalador_knn.transform(caracteristicas_usuario) # Escalar los datos con el escalador entrenado de KNN
+
+    precio_predicho = modelo_knn.predict(datos_escalados)[0]  # Realiza la predicción del precio con KNN
+
+    return render_template('regression_application.html', prediction=precio_predicho) # 4. Envia el resultado de vuelta a la plantilla HTML
+
+
