@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4 border-bottom pb-2" id="lc-title">Logistic Regression Concepts</h2>
+
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="lc-sub1">What is Logistic Regression?</h5>
+        <p id="lc-p1">Logistic Regression is a supervised learning algorithm used to solve classification problems. Instead of predicting a continuous number, it estimates the probability that an observation belongs to one of two possible classes, using a sigmoid (S-shaped) function to map any input into a value between 0 and 1.</p>
+    </div>
+</div>
+
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="lc-sub2">Why is it considered a classification algorithm?</h5>
+        <p id="lc-p2">Although it is called "regression," its output is used to assign a discrete category. The probability produced by the sigmoid function is compared against a classification threshold (commonly 0.5) to decide the final predicted class.</p>
+    </div>
+</div>
+
+<div class="row mb-4 g-3">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold" id="lc-sub3">Binary Classification</h5>
+                <p id="lc-p3">Binary classification refers to problems where the target variable has exactly two possible classes or labels, typically represented as 0 and 1.</p>
+                <ul id="lc-list1">
+                    <li><strong>Independent Variable (X):</strong> The predictor used as input (e.g., hours of sleep).</li>
+                    <li><strong>Target Variable (Y):</strong> The binary outcome being predicted (0 or 1).</li>
+                    <li><strong>Classes / Labels:</strong> The two categories the model can assign.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold" id="lc-sub4">Probability & Threshold</h5>
+                <ul id="lc-list2">
+                    <li><strong>Probability of belonging to a class:</strong> A value between 0 and 1 produced by the sigmoid function.</li>
+                    <li><strong>Classification threshold:</strong> The cutoff point (usually 0.5) used to convert a probability into a discrete class (0 or 1).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="lc-sub5">Linear Regression vs Logistic Regression</h5>
+        <ul id="lc-list3">
+            <li><strong>Output type:</strong> Linear Regression predicts a continuous value; Logistic Regression predicts a probability mapped to a discrete class.</li>
+            <li><strong>Function used:</strong> Linear Regression fits a straight line; Logistic Regression fits an S-shaped sigmoid curve.</li>
+            <li><strong>Goal:</strong> Linear Regression minimizes prediction error on a numeric scale; Logistic Regression maximizes the likelihood of correctly classifying each observation.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const pageTexts = {
+        en: {
+            title: "Logistic Regression Concepts",
+            sub1: "What is Logistic Regression?",
+            p1: "Logistic Regression is a supervised learning algorithm used to solve classification problems. Instead of predicting a continuous number, it estimates the probability that an observation belongs to one of two possible classes, using a sigmoid (S-shaped) function to map any input into a value between 0 and 1.",
+            sub2: "Why is it considered a classification algorithm?",
+            p2: "Although it is called \"regression,\" its output is used to assign a discrete category. The probability produced by the sigmoid function is compared against a classification threshold (commonly 0.5) to decide the final predicted class.",
+            sub3: "Binary Classification",
+            p3: "Binary classification refers to problems where the target variable has exactly two possible classes or labels, typically represented as 0 and 1.",
+            list1: "<li><strong>Independent Variable (X):</strong> The predictor used as input (e.g., hours of sleep).</li><li><strong>Target Variable (Y):</strong> The binary outcome being predicted (0 or 1).</li><li><strong>Classes / Labels:</strong> The two categories the model can assign.</li>",
+            sub4: "Probability & Threshold",
+            list2: "<li><strong>Probability of belonging to a class:</strong> A value between 0 and 1 produced by the sigmoid function.</li><li><strong>Classification threshold:</strong> The cutoff point (usually 0.5) used to convert a probability into a discrete class (0 or 1).</li>",
+            sub5: "Linear Regression vs Logistic Regression",
+            list3: "<li><strong>Output type:</strong> Linear Regression predicts a continuous value; Logistic Regression predicts a probability mapped to a discrete class.</li><li><strong>Function used:</strong> Linear Regression fits a straight line; Logistic Regression fits an S-shaped sigmoid curve.</li><li><strong>Goal:</strong> Linear Regression minimizes prediction error on a numeric scale; Logistic Regression maximizes the likelihood of correctly classifying each observation.</li>"
+        },
+        es: {
+            title: "Conceptos de Regresión Logística",
+            sub1: "¿Qué es la Regresión Logística?",
+            p1: "La Regresión Logística es un algoritmo de aprendizaje supervisado usado para resolver problemas de clasificación. En lugar de predecir un número continuo, estima la probabilidad de que una observación pertenezca a una de dos clases posibles, usando una función sigmoide (en forma de S) que mapea cualquier entrada a un valor entre 0 y 1.",
+            sub2: "¿Por qué se considera un algoritmo de clasificación?",
+            p2: "Aunque se llama \"regresión\", su salida se usa para asignar una categoría discreta. La probabilidad producida por la función sigmoide se compara contra un umbral de clasificación (comúnmente 0.5) para decidir la clase final predicha.",
+            sub3: "Clasificación Binaria",
+            p3: "La clasificación binaria se refiere a problemas donde la variable objetivo tiene exactamente dos clases o etiquetas posibles, típicamente representadas como 0 y 1.",
+            list1: "<li><strong>Variable Independiente (X):</strong> El predictor usado como entrada (ej. horas de sueño).</li><li><strong>Variable Objetivo (Y):</strong> El resultado binario que se predice (0 o 1).</li><li><strong>Clases / Etiquetas:</strong> Las dos categorías que el modelo puede asignar.</li>",
+            sub4: "Probabilidad y Umbral",
+            list2: "<li><strong>Probabilidad de pertenecer a una clase:</strong> Un valor entre 0 y 1 producido por la función sigmoide.</li><li><strong>Umbral de clasificación:</strong> El punto de corte (usualmente 0.5) usado para convertir una probabilidad en una clase discreta (0 o 1).</li>",
+            sub5: "Regresión Lineal vs Regresión Logística",
+            list3: "<li><strong>Tipo de salida:</strong> La Regresión Lineal predice un valor continuo; la Regresión Logística predice una probabilidad mapeada a una clase discreta.</li><li><strong>Función usada:</strong> La Regresión Lineal ajusta una línea recta; la Regresión Logística ajusta una curva sigmoide en forma de S.</li><li><strong>Objetivo:</strong> La Regresión Lineal minimiza el error de predicción en una escala numérica; la Regresión Logística maximiza la probabilidad de clasificar correctamente cada observación.</li>"
+        }
+    };
+
+    function applyPageLanguage(lang) {
+        const t = pageTexts[lang] || pageTexts.en;
+        document.getElementById('lc-title').textContent = t.title;
+        document.getElementById('lc-sub1').textContent = t.sub1;
+        document.getElementById('lc-p1').textContent = t.p1;
+        document.getElementById('lc-sub2').textContent = t.sub2;
+        document.getElementById('lc-p2').textContent = t.p2;
+        document.getElementById('lc-sub3').textContent = t.sub3;
+        document.getElementById('lc-p3').textContent = t.p3;
+        document.getElementById('lc-list1').innerHTML = t.list1;
+        document.getElementById('lc-sub4').textContent = t.sub4;
+        document.getElementById('lc-list2').innerHTML = t.list2;
+        document.getElementById('lc-sub5').textContent = t.sub5;
+        document.getElementById('lc-list3').innerHTML = t.list3;
+    }
+
+    window.addEventListener('languageChanged', (e) => applyPageLanguage(e.detail.lang));
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentLang = localStorage.getItem('preferred_lang') || 'en';
+        applyPageLanguage(currentLang);
+    });
+</script>
+{% endblock %}

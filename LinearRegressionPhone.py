@@ -86,3 +86,5 @@ def generatePlot():
     image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
     plt.close()
     return image_base64
+
+

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import LinearRegressionPhone  # Importación del módulo local que contiene la lógica del modelo y dataset
+import LogisticRegressionSleep  # Importación del módulo local de Regresión Logística
 
 # Instanciación de la aplicación web en Flask
 app = Flask(__name__)
@@ -81,6 +82,49 @@ def LRegressionPhone():
         plot_url=plot_url,
         num_records=len(LinearRegressionPhone.df)
     )
+
+
+@app.route('/logistic/concepts')
+def logistic_concepts():
+    return render_template('logistic_concepts.html')
+
+@app.route('/logistic/', methods=['GET', 'POST'])
+def logisticApplication():
+    predicted_class = None
+    predicted_label = None
+    predicted_proba = None
+    horas_ingresadas = None
+    error = None
+
+    if request.method == 'POST':
+        try:
+            val = float(request.form['horas_sueno'])
+            if val < 0 or val > 24:
+                error = "Please enter a valid number of hours between 0 and 24."
+            else:
+                horas_ingresadas = val
+                predicted_class, predicted_proba = LogisticRegressionSleep.predictDesercion(val)
+                predicted_label = "Drops out" if predicted_class == 1 else "Continues"
+        except (ValueError, KeyError):
+            error = "Please enter a valid numeric value."
+
+    plot_url = LogisticRegressionSleep.generatePlot()
+
+    return render_template(
+        'logistic_application.html',
+        result_class=predicted_class,
+        result_label=predicted_label,
+        result_proba=predicted_proba,
+        horas=horas_ingresadas,
+        error=error,
+        plot_url=plot_url,
+        num_records=len(LogisticRegressionSleep.df)
+    )
+
+@app.route('/logistic/metrics')
+def logistic_metrics():
+    metrics = LogisticRegressionSleep.getEvaluationMetrics()
+    return render_template('logistic_metrics.html', m=metrics)
 
 # Punto de entrada para la ejecución del servidor de desarrollo local
 if __name__ == '__main__':

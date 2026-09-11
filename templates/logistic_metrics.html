@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4 border-bottom pb-2" id="lm-title">Logistic Regression - Evaluation Metrics</h2>
+
+<p class="text-muted mb-4" id="lm-intro">The model was evaluated on the 20% testing subset ({{ m.n_test }} records) that was not used during training.</p>
+
+<!-- Matriz de Confusión -->
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="lm-title-cm">Confusion Matrix</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle mb-3">
+                <thead class="table-light">
+                    <tr>
+                        <th></th>
+                        <th id="lm-pred0">Predicted: Continues (0)</th>
+                        <th id="lm-pred1">Predicted: Drops out (1)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th id="lm-actual0" class="table-light">Actual: Continues (0)</th>
+                        <td class="bg-success bg-opacity-25 fw-bold">{{ m.tn }} <span id="lm-tn-label">(TN)</span></td>
+                        <td class="bg-danger bg-opacity-25 fw-bold">{{ m.fp }} <span id="lm-fp-label">(FP)</span></td>
+                    </tr>
+                    <tr>
+                        <th id="lm-actual1" class="table-light">Actual: Drops out (1)</th>
+                        <td class="bg-danger bg-opacity-25 fw-bold">{{ m.fn }} <span id="lm-fn-label">(FN)</span></td>
+                        <td class="bg-success bg-opacity-25 fw-bold">{{ m.tp }} <span id="lm-tp-label">(TP)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="mb-0" id="lm-cm-interpretation">
+            <strong>Interpretation:</strong> True Positives (TP) and True Negatives (TN) represent correct classifications, while False Positives (FP) and False Negatives (FN) represent the students the model misclassified. A high FN count is particularly important here, since it means at-risk students who actually dropped out were missed by the model.
+        </p>
+    </div>
+</div>
+
+<!-- Métricas de Clasificación -->
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="lm-title-metrics">Classification Metrics</h5>
+        <div class="row g-3 text-center">
+            <div class="col-6 col-md-3">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted" id="lm-lbl-acc">Accuracy</h6>
+                        <h3 class="fw-bold text-success">{{ m.accuracy }}%</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted" id="lm-lbl-prec">Precision</h6>
+                        <h3 class="fw-bold text-success">{{ m.precision }}%</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted" id="lm-lbl-rec">Recall</h6>
+                        <h3 class="fw-bold text-success">{{ m.recall }}%</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted" id="lm-lbl-f1">F1-score</h6>
+                        <h3 class="fw-bold text-success">{{ m.f1 }}%</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="lm-title-interp">Performance Interpretation</h5>
+        <p class="mb-0" id="lm-interp-text">
+            An accuracy above 80% indicates the model correctly classifies most students. Precision reflects how many of the students predicted as "at risk of dropping out" actually dropped out, which is useful to avoid unnecessary interventions on students who were not truly at risk.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const pageTexts = {
+        en: {
+            title: "Logistic Regression - Evaluation Metrics",
+            intro: "The model was evaluated on the 20% testing subset ({{ m.n_test }} records) that was not used during training.",
+            titleCm: "Confusion Matrix",
+            pred0: "Predicted: Continues (0)",
+            pred1: "Predicted: Drops out (1)",
+            actual0: "Actual: Continues (0)",
+            actual1: "Actual: Drops out (1)",
+            tnLabel: "(TN)",
+            fpLabel: "(FP)",
+            fnLabel: "(FN)",
+            tpLabel: "(TP)",
+            cmInterpretation: "<strong>Interpretation:</strong> True Positives (TP) and True Negatives (TN) represent correct classifications, while False Positives (FP) and False Negatives (FN) represent the students the model misclassified. A high FN count is particularly important here, since it means at-risk students who actually dropped out were missed by the model.",
+            titleMetrics: "Classification Metrics",
+            lblAcc: "Accuracy",
+            lblPrec: "Precision",
+            lblRec: "Recall",
+            lblF1: "F1-score",
+            titleInterp: "Performance Interpretation",
+            interpText: "An accuracy above 80% indicates the model correctly classifies most students. Precision reflects how many of the students predicted as \"at risk of dropping out\" actually dropped out, which is useful to avoid unnecessary interventions on students who were not truly at risk."
+        },
+        es: {
+            title: "Regresión Logística - Métricas de Evaluación",
+            intro: "El modelo fue evaluado sobre el subconjunto de prueba del 20%",
+            titleCm: "Matriz de Confusión",
+            pred0: "Predicho: Continúa (0)",
+            pred1: "Predicho: Deserta (1)",
+            actual0: "Real: Continúa (0)",
+            actual1: "Real: Deserta (1)",
+            tnLabel: "(TN)",
+            fpLabel: "(FP)",
+            fnLabel: "(FN)",
+            tpLabel: "(TP)",
+            cmInterpretation: "<strong>Interpretación:</strong> Los Verdaderos Positivos (TP) y Verdaderos Negativos (TN) representan clasificaciones correctas, mientras que los Falsos Positivos (FP) y Falsos Negativos (FN) representan estudiantes mal clasificados. Un número alto de FN es especialmente importante aquí, ya que significa que estudiantes en riesgo que realmente desertaron no fueron detectados por el modelo.",
+            titleMetrics: "Métricas de Clasificación",
+            lblAcc: "Exactitud",
+            lblPrec: "Precisión",
+            lblRec: "Sensibilidad (Recall)",
+            lblF1: "Puntaje F1",
+            titleInterp: "Interpretación del Desempeño",
+            interpText: "Una exactitud superior al 80% indica que el modelo clasifica correctamente a la mayoría de los estudiantes. La precisión refleja cuántos de los estudiantes predichos como \"en riesgo de desertar\" realmente desertaron, lo cual es útil para evitar intervenciones innecesarias en estudiantes que no estaban realmente en riesgo."
+        }
+    };
+
+    function applyPageLanguage(lang) {
+        const t = pageTexts[lang] || pageTexts.en;
+        document.getElementById('lm-title').textContent = t.title;
+        document.getElementById('lm-title-cm').textContent = t.titleCm;
+        document.getElementById('lm-pred0').textContent = t.pred0;
+        document.getElementById('lm-pred1').textContent = t.pred1;
+        document.getElementById('lm-actual0').textContent = t.actual0;
+        document.getElementById('lm-actual1').textContent = t.actual1;
+        document.getElementById('lm-tn-label').textContent = t.tnLabel;
+        document.getElementById('lm-fp-label').textContent = t.fpLabel;
+        document.getElementById('lm-fn-label').textContent = t.fnLabel;
+        document.getElementById('lm-tp-label').textContent = t.tpLabel;
+        document.getElementById('lm-cm-interpretation').innerHTML = t.cmInterpretation;
+        document.getElementById('lm-title-metrics').textContent = t.titleMetrics;
+        document.getElementById('lm-lbl-acc').textContent = t.lblAcc;
+        document.getElementById('lm-lbl-prec').textContent = t.lblPrec;
+        document.getElementById('lm-lbl-rec').textContent = t.lblRec;
+        document.getElementById('lm-lbl-f1').textContent = t.lblF1;
+        document.getElementById('lm-title-interp').textContent = t.titleInterp;
+        document.getElementById('lm-interp-text').textContent = t.interpText;
+    }
+
+    window.addEventListener('languageChanged', (e) => applyPageLanguage(e.detail.lang));
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentLang = localStorage.getItem('preferred_lang') || 'en';
+        applyPageLanguage(currentLang);
+    });
+</script>
+{% endblock %}

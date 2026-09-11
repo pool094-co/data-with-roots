@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4 border-bottom pb-2" id="la-title">Logistic Regression - Student Dropout Prediction</h2>
+
+<!-- 1. Contexto del Problema -->
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="la-title-context">1. Problem Context</h5>
+        <p class="mb-0" id="la-text-context">We analyze the relationship between a student's average hours of sleep per night and the likelihood of dropping out of their academic program. The goal is to classify each student as likely to continue or likely to drop out.</p>
+    </div>
+</div>
+
+<!-- 2 y 3. Variables y Metadatos del Dataset -->
+<div class="row mb-4 g-3">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold" id="la-title-vars">2. Model Variables</h5>
+                <ul id="la-list-vars">
+                    <li><strong>Independent Variable (X):</strong> Hours of Sleep per night (Quantitative).</li>
+                    <li><strong>Target Variable (Y):</strong> Dropout (Binary: 0 = Continues, 1 = Drops out).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold" id="la-title-dataset">3. Dataset Information</h5>
+                <p class="mb-1"><strong id="la-lbl-records">Number of Records:</strong> {{ num_records }} rows.</p>
+                <p class="mb-1"><strong id="la-lbl-class0">Class 0:</strong> Continues in the program.</p>
+                <p class="mb-0"><strong id="la-lbl-class1">Class 1:</strong> Drops out of the program.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Visualización -->
+<div class="card mb-4 border-0 shadow-sm text-center">
+    <div class="card-body">
+        <h5 class="card-title text-start text-success fw-bold" id="la-title-plot">4. Data Visualization</h5>
+        <img src="data:image/png;base64,{{ plot_url }}" class="img-fluid rounded border mt-2" alt="Scatter Plot and Sigmoid Curve">
+    </div>
+</div>
+
+<!-- 6. Formulario de Clasificación -->
+<div class="card border-0 shadow-sm p-3">
+    <div class="card-body">
+        <h5 class="card-title text-success fw-bold" id="la-title-form">5. Interactive Classification Form</h5>
+
+        <form method="post" action="/logistic/" class="mt-3">
+            <div class="mb-3">
+                <label for="horas_sueno" class="form-label" id="la-lbl-input">Enter Hours of Sleep per Night:</label>
+                <input type="number" step="any" min="0" max="24" class="form-control" name="horas_sueno" id="horas_sueno" required placeholder="Example: 6.5">
+            </div>
+            <button type="submit" class="btn btn-success" id="la-btn-submit">Classify Student</button>
+        </form>
+
+        {% if error %}
+            <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+        {% endif %}
+
+        {% if result_class is not none %}
+            <div class="alert {{ 'alert-danger' if result_class == 1 else 'alert-success' }} mt-4 mb-0">
+                <h3 class="fw-bold mb-1">
+                    <span id="la-lbl-result">Predicted Class:</span> {{ result_class }} ({{ result_label }})
+                </h3>
+                <p class="mb-1"><span id="la-lbl-pred-for">Based on</span> <strong>{{ horas }}</strong> <span id="la-lbl-hours">hours of sleep per night.</span></p>
+                <p class="mb-0"><span id="la-lbl-proba">Estimated dropout probability:</span> <strong>{{ result_proba }}%</strong></p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const pageTexts = {
+        en: {
+            title: "Logistic Regression - Student Dropout Prediction",
+            titleContext: "1. Problem Context",
+            textContext: "We analyze the relationship between a student's average hours of sleep per night and the likelihood of dropping out of their academic program. The goal is to classify each student as likely to continue or likely to drop out.",
+            titleVars: "2. Model Variables",
+            listVars: "<li><strong>Independent Variable (X):</strong> Hours of Sleep per night (Quantitative).</li><li><strong>Target Variable (Y):</strong> Dropout (Binary: 0 = Continues, 1 = Drops out).</li>",
+            titleDataset: "3. Dataset Information",
+            lblRecords: "Number of Records:",
+            lblClass0: "Class 0:",
+            lblClass1: "Class 1:",
+            titlePlot: "4. Data Visualization",
+            titleForm: "5. Interactive Classification Form",
+            lblInput: "Enter Hours of Sleep per Night:",
+            btnSubmit: "Classify Student",
+            lblResult: "Predicted Class:",
+            lblPredFor: "Based on",
+            lblHours: "hours of sleep per night.",
+            lblProba: "Estimated dropout probability:"
+        },
+        es: {
+            title: "Regresión Logística - Predicción de Deserción Estudiantil",
+            titleContext: "1. Contexto del Problema",
+            textContext: "Analizamos la relación entre el promedio de horas de sueño de un estudiante y la probabilidad de que abandone su programa académico. El objetivo es clasificar a cada estudiante como propenso a continuar o a desertar.",
+            titleVars: "2. Variables del Modelo",
+            listVars: "<li><strong>Variable Independiente (X):</strong> Horas de sueño por noche (Cuantitativa).</li><li><strong>Variable Objetivo (Y):</strong> Deserción (Binaria: 0 = Continúa, 1 = Deserta).</li>",
+            titleDataset: "3. Información del Conjunto de Datos",
+            lblRecords: "Número de Registros:",
+            lblClass0: "Clase 0:",
+            lblClass1: "Clase 1:",
+            titlePlot: "4. Visualización de Datos",
+            titleForm: "5. Formulario de Clasificación Interactivo",
+            lblInput: "Ingrese las horas de sueño por noche:",
+            btnSubmit: "Clasificar Estudiante",
+            lblResult: "Clase Predicha:",
+            lblPredFor: "Basado en",
+            lblHours: "horas de sueño por noche.",
+            lblProba: "Probabilidad estimada de deserción:"
+        }
+    };
+
+    function applyPageLanguage(lang) {
+        const t = pageTexts[lang] || pageTexts.en;
+        document.getElementById('la-title').textContent = t.title;
+        document.getElementById('la-title-context').textContent = t.titleContext;
+        document.getElementById('la-text-context').textContent = t.textContext;
+        document.getElementById('la-title-vars').textContent = t.titleVars;
+        document.getElementById('la-list-vars').innerHTML = t.listVars;
+        document.getElementById('la-title-dataset').textContent = t.titleDataset;
+        document.getElementById('la-lbl-records').textContent = t.lblRecords;
+        document.getElementById('la-lbl-class0').textContent = t.lblClass0;
+        document.getElementById('la-lbl-class1').textContent = t.lblClass1;
+        document.getElementById('la-title-plot').textContent = t.titlePlot;
+        document.getElementById('la-title-form').textContent = t.titleForm;
+        document.getElementById('la-lbl-input').textContent = t.lblInput;
+        document.getElementById('la-btn-submit').textContent = t.btnSubmit;
+
+        if (document.getElementById('la-lbl-result')) {
+            document.getElementById('la-lbl-result').textContent = t.lblResult;
+            document.getElementById('la-lbl-pred-for').textContent = t.lblPredFor;
+            document.getElementById('la-lbl-hours').textContent = t.lblHours;
+            document.getElementById('la-lbl-proba').textContent = t.lblProba;
+        }
+    }
+
+    window.addEventListener('languageChanged', (e) => applyPageLanguage(e.detail.lang));
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentLang = localStorage.getItem('preferred_lang') || 'en';
+        applyPageLanguage(currentLang);
+    });
+</script>
+{% endblock %}
