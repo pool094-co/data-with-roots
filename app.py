@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import LinearRegressionPhone  # Importación del módulo local que contiene la lógica del modelo y dataset
 import LogisticRegressionSleep  # Importación del módulo local de Regresión Logística
 import KnnRegression # Importación del módulo local de KNN
-modelo_knn, escalador_knn = KnnRegression.entrenar_modelo_knn()
+modelo_knn, escalador_knn = KnnRegression.entrenar_knn_clasificador()
 
 
 # Instanciación de la aplicación web en Flask

@@ -8,8 +8,9 @@ def entrenar_knn_clasificador():
     df = pd.read_csv('logistic_dataset.csv')
     
     
-    X = df.drop(columns=['target']) 
-    y = df['target']
+    X = df.drop(columns=['desercion'])
+    y = df['desercion']
+
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
