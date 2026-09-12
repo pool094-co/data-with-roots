@@ -1,21 +1,33 @@
-<!-- Herencia de la estructura base maestra (base.html) -->
+<!-- ==============================================================================
+     PLANTILLA: home.html
+     DESCRIPCIÓN: Vista principal de bienvenida a la aplicación.
+                  Integrada con el motor global de traducción (data-i18n).
+     ============================================================================== -->
+
 {% extends 'base.html' %}
 
-<!-- Inyección del contenido específico para la vista de Inicio -->
 {% block content %}
-<!-- Tarjeta principal de presentación (Hero Component) estructurada con Bootstrap 5 -->
-<div class="p-5 mb-4 bg-white rounded-3 shadow-sm border">
-    <div class="container-fluid py-3">
-        <!-- Título principal vinculado declarativamente al motor i18n mediante el atributo data-i18n -->
-        <h1 class="display-5 fw-bold text-success" data-i18n="home_title">Welcome to Data with Roots</h1>
+<!-- Contenedor principal tipo Jumbotron de Bootstrap 5 -->
+<div class="p-5 mb-4 bg-white rounded-3 shadow-sm border mt-4">
+    <div class="container-fluid py-5 text-center">
+        <!-- Título principal con traducción dinámica -->
+        <h1 class="display-5 fw-bold text-success mb-3" data-i18n="home_title">
+            Welcome to Data with Roots
+        </h1>
         
-        <!-- Descripción del sistema enlazada dinámicamente -->
-        <p class="col-md-10 fs-4 text-muted" data-i18n="home_desc">An interactive web application designed to predict used mobile phone prices based on their age in months.</p>
+        <!-- Descripción de la plataforma -->
+        <p class="col-md-8 mx-auto fs-5 text-secondary" data-i18n="home_desc">
+            An interactive web application designed to demonstrate Linear Regression, Logistic Regression, and KNN Classification models.
+        </p>
         
-        <!-- Contenedor Flexbox de botones navegables de llamada a la acción (CTA) -->
-        <div class="d-flex gap-3 mt-4">
-            <a href="/ml/concepts" class="btn btn-outline-success btn-lg" data-i18n="home_btn_explore">Explore ML Concepts</a>
-            <a href="/LinearRegression/" class="btn btn-success btn-lg" data-i18n="home_btn_predict">Try Predictive Model</a>
+        <!-- Botones de navegación rápida -->
+        <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
+            <a href="/ml/concepts" class="btn btn-outline-dark btn-lg fw-bold px-4" data-i18n="home_explore">
+                Explore ML Concepts
+            </a>
+            <a href="/LinearRegression/" class="btn btn-success btn-lg fw-bold px-4" data-i18n="home_predict">
+                Try Predictive Models
+            </a>
         </div>
     </div>
 </div>

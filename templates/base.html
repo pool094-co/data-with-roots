@@ -1,55 +1,40 @@
+<!-- ==============================================================================
+     PLANTILLA BASE: base.html (VERSIÓN DEFINITIVA Y UNIFICADA)
+     DESCRIPCIÓN: Estructura global con Navbar, Footer y el motor de traducción 
+                  completo para TODAS las vistas de la Actividad 1 y Actividad 2.
+     ============================================================================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Configuración estándar de metadatos: Codificación de caracteres UTF-8 y Viewport responsivo -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data with Roots - Machine Learning App</title>
-    
-    <!-- Hoja de estilos del framework Bootstrap 5 via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
 
-    <!-- NAV BAR SUPERIOR STICKY -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <!-- Logotipo de la marca con icono de teléfono inteligente -->
             <a class="navbar-brand fw-bold text-success" href="/">📱 Data with Roots</a>
             
             <div class="d-flex align-items-center order-lg-3 ms-auto">
-                <!-- SELECTOR DESPLEGABLE DE IDIOMA (EN / ES) CON BANDERAS -->
                 <div class="dropdown me-2 me-lg-0">
                     <button class="btn btn-outline-success btn-sm dropdown-toggle d-flex align-items-center gap-2 text-white" type="button" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <span id="currentLangFlag">🇺🇸</span> <span id="currentLangText">English</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="langDropdown">
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setLanguage('en'); return false;">
-                                🇺🇸 English
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setLanguage('es'); return false;">
-                                🇨🇴 Español
-                            </a>
-                        </li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setLanguage('en'); return false;">🇺🇸 English</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="#" onclick="setLanguage('es'); return false;">🇨🇴 Español</a></li>
                     </ul>
                 </div>
-
-                <!-- Botón hamburguesa para colapso en pantallas móviles -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
 
-            <!-- Menú de navegación principal -->
             <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/" data-i18n="nav_home">Home</a>
-                    </li>
-                    
+                    <li class="nav-item"><a class="nav-link" href="/" data-i18n="nav_home">Home</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="mlDropdown" data-bs-toggle="dropdown" data-i18n="nav_ml">Machine Learning</a>
                         <ul class="dropdown-menu">
@@ -63,13 +48,22 @@
                             <li><a class="dropdown-item" href="/ml/use-case-4" data-i18n="nav_uc4">Use Case 4</a></li>
                         </ul>
                     </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="supDropdown" data-bs-toggle="dropdown" data-i18n="nav_supervised">Supervised</a>
                         <ul class="dropdown-menu">
-                            <li><span class="dropdown-item-text fw-bold" data-i18n="nav_linreg">Linear Regression</span></li>
+                            <li><span class="dropdown-item-text fw-bold text-primary" data-i18n="nav_linreg">Linear Regression</span></li>
                             <li><a class="dropdown-item" href="/regression/concepts" data-i18n="nav_concepts">Concepts</a></li>
                             <li><a class="dropdown-item" href="/LinearRegression/" data-i18n="nav_app">Application</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><span class="dropdown-item-text fw-bold text-success" data-i18n="nav_logreg">Logistic Regression</span></li>
+                            <li><a class="dropdown-item" href="/logistic/concepts" data-i18n="nav_concepts">Concepts</a></li>
+                            <li><a class="dropdown-item" href="/logistic/application" data-i18n="nav_app">Application</a></li>
+                            <li><a class="dropdown-item" href="/logistic/metrics" data-i18n="nav_metrics">Evaluation Metrics</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><span class="dropdown-item-text fw-bold text-warning text-dark" data-i18n="nav_knn">K-Nearest Neighbors</span></li>
+                            <li><a class="dropdown-item" href="/knn/concepts" data-i18n="nav_concepts">Concepts</a></li>
+                            <li><a class="dropdown-item" href="/knn/application" data-i18n="nav_app">Application</a></li>
+                            <li><a class="dropdown-item" href="/knn/metrics" data-i18n="nav_metrics">Evaluation Metrics</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -77,56 +71,110 @@
         </div>
     </nav>
 
-    <!-- CONTENEDOR PRINCIPAL DINÁMICO (JINJA2) -->
     <main class="container my-4 flex-grow-1">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-dark text-white text-center py-3 mt-auto">
         <p class="mb-0" data-i18n="footer_text">&copy; 2026 Data with Roots — All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap 5 Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- MOTOR CENTRALIZADO DE INTERNACIONALIZACIÓN (I18N) -->
     <script>
-        // Diccionario unificado que consolida claves globales y de vistas teóricas
         const translations = {
             en: {
-                // Navegación y Footer
-                nav_home: "Home",
-                nav_ml: "Machine Learning",
-                nav_concepts: "Concepts",
-                nav_types: "Types of Machine Learning",
-                nav_usecases: "Use Cases",
-                nav_uc1: "Use Case 1",
-                nav_uc2: "Use Case 2",
-                nav_uc3: "Use Case 3",
-                nav_uc4: "Use Case 4",
-                nav_supervised: "Supervised",
-                nav_linreg: "Linear Regression",
-                nav_app: "Application",
+                // Inicio (Home)
+                home_title: "Welcome to Data with Roots",
+                home_desc: "An interactive web application designed to demonstrate Linear Regression, Logistic Regression, and KNN Classification models.",
+                home_explore: "Explore ML Concepts",
+                home_predict: "Try Predictive Models",
+
+                // Navegación
+                nav_home: "Home", nav_ml: "Machine Learning", nav_concepts: "Concepts", nav_types: "Types of Machine Learning",
+                nav_usecases: "Use Cases", nav_uc1: "Use Case 1", nav_uc2: "Use Case 2", nav_uc3: "Use Case 3", nav_uc4: "Use Case 4",
+                nav_supervised: "Supervised", nav_linreg: "Linear Regression", nav_logreg: "Logistic Regression",
+                nav_knn: "K-Nearest Neighbors (KNN)", nav_app: "Application", nav_metrics: "Evaluation Metrics",
                 footer_text: "© 2026 Data with Roots — All rights reserved.",
 
-                // Vista Home
-                home_title: "Welcome to Data with Roots",
-                home_desc: "An interactive web application designed to predict used mobile phone prices based on their age in months.",
-                home_btn_explore: "Explore ML Concepts",
-                home_btn_predict: "Try Predictive Model",
+                // Regresión Lineal (Conceptos)
+                regc_title: "Linear Regression Concepts",
+                regc_sub1: "What is Linear Regression?",
+                regc_p1: "Linear Regression is a supervised learning algorithm that models the mathematical relationship between an independent input variable (X) and a continuous dependent target variable (Y) using a straight line.",
+                regc_varx_title: "Independent Variable (X):",
+                regc_varx_desc: "The input predictor factor (e.g., Age of the mobile phone in <strong>months</strong>).",
+                regc_vary_title: "Dependent Variable (Y):",
+                regc_vary_desc: "The output target to predict (e.g., Estimated market price in <strong>COP</strong>).",
 
-                // Vista ML Concepts
-                concepts_title: "Fundamental Machine Learning Concepts",
-                concepts_c1_title: "What is Machine Learning?",
-                concepts_c1_text: "Machine Learning is a branch of Artificial Intelligence that enables computer systems to automatically learn and improve from experience without being explicitly programmed.",
-                concepts_c2_title: "Main Purpose",
-                concepts_c2_text: "To identify underlying patterns within historical data in order to make accurate predictions, classifications, or automated insights on new, unseen data.",
-                concepts_c3_title: "Relationship: Data → Training → Model → Predictions",
-                concepts_c3_text: "Raw <strong>Data</strong> feeds the <strong>Training</strong> algorithm, adjusting mathematical parameters to build an optimized <strong>Model</strong> that outputs reliable <strong>Predictions</strong>.",
-                concepts_c3_alert: "<strong>Importance of Data:</strong> Without high-quality, clean, and representative data, Machine Learning models cannot learn valid patterns.",
+                // Regresión Lineal (Aplicación)
+                regapp_title: "Linear Regression - Used Mobile Phone Price Prediction",
+                regapp_ctx_title: "1. Problem Context",
+                regapp_ctx_text: "We analyze the commercial depreciation phenomenon in the secondary smartphone market to estimate a mobile phone's resale monetary value based on its usage duration in months.",
+                regapp_var_title: "2. Model Variables",
+                regapp_var_list: "<li><strong>Independent Variable (X):</strong> Age (Quantitative, measured in <strong>Months</strong>).</li><li><strong>Dependent Variable (Y):</strong> Price (Quantitative, measured in <strong>COP - Colombian Pesos</strong>).</li>",
+                regapp_data_title: "3. Dataset Information",
+                regapp_data_rec: "Number of Records:",
+                regapp_data_src: "<strong>Source:</strong> Historical used smartphone market transaction dataset.",
+                regapp_data_cur: "<strong>Currency:</strong> COP ($ Colombian Pesos).",
+                regapp_plot_title: "4. Data Visualization & Regression Line",
+                regapp_form_title: "6. Interactive Prediction Form",
+                regapp_form_lbl: "Enter Phone Age (in months):",
+                regapp_form_btn: "Predict Price (COP)",
+                regapp_res_title: "Estimated Price:",
+                regapp_res_lbl1: "Predicted value for a mobile phone with",
+                regapp_res_lbl2: "months of usage.",
 
-                // Caso de Uso 1 (Anti-Cheat)
+                // Regresión Logística (Conceptos, Aplicación, Métricas)
+                logc_title: "Binary Logistic Regression Concepts",
+                logc_q1: "What is Logistic Regression?",
+                logc_a1: "Logistic Regression is a supervised learning algorithm used to predict the probability of a categorical target outcome based on input features.",
+                logc_q2: "Why Classification?",
+                logc_a2: "Although it uses a mathematical equation similar to linear regression, its output passes through a Sigmoid Function to produce probabilities bounded between 0 and 1, mapping directly into discrete classes.",
+                logc_q3: "What is Binary Classification?",
+                logc_a3: "A classification task where the target variable has exactly two mutually exclusive outcomes (e.g., 0 = No / 1 = Yes).",
+                logc_q4: "Classification Threshold",
+                logc_a4: "The decision boundary (commonly 0.5) used to convert predicted probabilities into definitive class labels.",
+                logc_diff_title: "Difference: Linear vs Logistic Regression",
+                logc_diff_text: "Linear Regression predicts continuous numbers (e.g., prices), whereas Logistic Regression predicts probabilities for categorical outcomes (e.g., buy vs not buy).",
+                loga_title: "Logistic Regression — E-commerce Purchase Decision",
+                loga_sum_title: "1. Dataset Summary",
+                loga_form_title: "2. Interactive Classification Form",
+                loga_input_label: "User Navigation Time (Minutes):",
+                loga_btn: "Classify Purchase Decision",
+                loga_plot_title: "3. Data Visualization & Fitted Sigmoid Curve",
+                logm_title: "Logistic Regression — Evaluation Metrics (20% Test Set)",
+                logm_c1: "Class 1 (Buy)",
+                logm_c0: "Class 0 (Abandon)",
+
+                // KNN (Conceptos, Aplicación, Métricas)
+                knnc_title: "K-Nearest Neighbors (KNN) Concepts",
+                knnc_q1: "What is K-Nearest Neighbors?",
+                knnc_a1: "KNN is a non-parametric, instance-based supervised classification algorithm that assigns a new data point to the majority class among its 'K' closest neighbors in feature space.",
+                knnc_q2: "How does KNN work?",
+                knnc_a2: "It calculates the distance (typically Euclidean distance) between the new input and all existing training samples, selects the K nearest points, and performs a majority vote.",
+                knnc_adv_title: "Main Advantages",
+                knnc_adv_list: "<li>Simple to understand and implement.</li><li>No explicit training phase required (Lazy Learning).</li><li>Naturally handles multi-feature input spaces.</li>",
+                knnc_lim_title: "Limitations",
+                knnc_lim_list: "<li>Sensitive to feature scaling (requires normalization).</li><li>Computationally expensive with very large datasets.</li><li>Sensitive to irrelevant features or noise.</li>",
+                knna_title: "K-Nearest Neighbors — Employee Promotion Classifier",
+                knna_sum_title: "1. KNN Dataset Summary",
+                knna_form_title: "2. Interactive Multi-Variable Classification Form",
+                knna_exp_label: "Experience (Years):",
+                knna_score_label: "Tech Score (0-100):",
+                knna_proj_label: "Projects (1-10):",
+                knna_btn: "Evaluate Employee Promotion",
+                knna_plot_title: "3. Multi-Feature Data Clustering Scatter Plot",
+                knnm_title: "K-Nearest Neighbors — Evaluation Metrics (20% Test Set)",
+                knnm_c1: "Class 1 (Promoted)",
+                knnm_c0: "Class 0 (Not Promoted)",
+
+                // Métricas Globales
+                metric_accuracy: "ACCURACY", metric_precision: "PRECISION",
+                metric_acc_desc: "Percentage of correct total classifications", metric_prec_desc: "Proportion of positive identifications that were correct",
+                cm_title: "Confusion Matrix Details", cm_actual: "Actual Class", cm_predicted: "Predicted Class",
+                cm_tp: "True Positive (TP)", cm_fp: "False Positive (FP)", cm_fn: "False Negative (FN)", cm_tn: "True Negative (TN)",
+
+                // Casos de Uso 1
                 uc1_badge: "Use Case 1 — Gaming & Tech",
                 uc1_title: "Predictive Anti-Cheat Detection in Multiplayer Games",
                 uc1_subtitle: "Leveraging Machine Learning to identify players using unauthorized software (Aimbots, Wallhacks) in competitive online games.",
@@ -137,13 +185,13 @@
                 uc1_m1_title: "🤖 Machine Learning Type",
                 uc1_m1_text: "<strong>Supervised Learning (Classification)</strong> & Anomaly Detection.",
                 uc1_m2_title: "🔮 Model Objective",
-                uc1_m2_text: "Classify real-time match telemetry as <em>'Organic Human'</em> or <em>'Anomalous Bot (CHEAT)'</em>.",
+                uc1_m2_text: "Classify real-time match telemetry as <em>\"Organic Human\"</em> or <em>\"Anomalous Bot (CHEAT)\"</em>.",
                 uc1_m3_title: "💡 Potential Benefit",
                 uc1_m3_text: "Automated instant suspension before malicious cheaters impact global competitive leaderboards.",
                 uc1_ex_title: "📌 Practical Example",
                 uc1_ex_text: "The model evaluates player telemetry during a FPS shooter match. It flags 8 consecutive headshots in 0.15 seconds with zero line-of-sight visibility. Comparing this against human performance baselines, it computes a <strong>99.4% cheat probability</strong> and triggers an automated temporary ban.",
 
-                // Caso de Uso 2 (Mantenimiento Predictivo Data Centers)
+                // Casos de Uso 2
                 uc2_badge: "Use Case 2 — Cloud & Infrastructure",
                 uc2_title: "Predictive Maintenance in Render Data Centers",
                 uc2_subtitle: "Anticipating critical hardware failures (GPUs/CPUs) across cloud rendering farms and server infrastructure.",
@@ -159,104 +207,139 @@
                 uc2_m3_text: "Minimizes unplanned downtime and optimizes hardware replacement schedules.",
                 uc2_ex_title: "📌 Practical Example",
                 uc2_ex_text: "A rack sensor registers thermal spikes reaching 88°C coupled with fan efficiency loss on GPU #42. The model predicts hardware failure within <strong>36 hours</strong>, automatically rerouting active workloads and alerting technicians for proactive replacement.",
-
-                // Vista Conceptos de Regresión Lineal
-                regc_title: "Linear Regression Concepts",
-                regc_sub1: "What is Linear Regression?",
-                regc_p1: "Linear Regression is a supervised learning algorithm that models the mathematical relationship between an independent input variable ($X$) and a continuous dependent target variable ($Y$) using a straight regression line.",
-                regc_varx_title: "Independent Variable (X):",
-                regc_varx_desc: "The input predictor factor (e.g., Age of the mobile phone in <strong>months</strong>).",
-                regc_vary_title: "Dependent Variable (Y):",
-                regc_vary_desc: "The output target to predict (e.g., Estimated market price in <strong>COP</strong>).",
-                regc_sub2: "Key Elements",
-                regc_list: "<li><strong>Relationship between variables:</strong> Analyzes how the dependent variable changes as the independent variable varies.</li><li><strong>Regression line:</strong> The best-fit trend line calculated to minimize prediction errors across all data points.</li><li><strong>Prediction:</strong> Calculating expected values for new unseen inputs based on the trained regression line.</li>"
             },
             es: {
+                // Inicio (Home)
+                home_title: "Bienvenido a Data with Roots",
+                home_desc: "Una aplicación web interactiva diseñada para demostrar modelos de Regresión Lineal, Regresión Logística y Clasificación KNN.",
+                home_explore: "Explorar Conceptos de ML",
+                home_predict: "Probar Modelos Predictivos",
+
                 // Navegación
-                nav_home: "Inicio",
-                nav_ml: "Aprendizaje Automático",
-                nav_concepts: "Conceptos",
-                nav_types: "Tipos de Aprendizaje",
-                nav_usecases: "Casos de Uso",
-                nav_uc1: "Caso de Uso 1",
-                nav_uc2: "Caso de Uso 2",
-                nav_uc3: "Caso de Uso 3",
-                nav_uc4: "Caso de Uso 4",
-                nav_supervised: "Supervisado",
-                nav_linreg: "Regresión Lineal",
-                nav_app: "Aplicación Práctica",
+                nav_home: "Inicio", nav_ml: "Aprendizaje Automático", nav_concepts: "Conceptos", nav_types: "Tipos de Aprendizaje",
+                nav_usecases: "Casos de Uso", nav_uc1: "Caso de Uso 1", nav_uc2: "Caso de Uso 2", nav_uc3: "Caso de Uso 3", nav_uc4: "Caso de Uso 4",
+                nav_supervised: "Supervisado", nav_linreg: "Regresión Lineal", nav_logreg: "Regresión Logística",
+                nav_knn: "K-Nearest Neighbors (KNN)", nav_app: "Aplicación Práctica", nav_metrics: "Métricas de Evaluación",
                 footer_text: "© 2026 Data with Roots — Todos los derechos reservados.",
 
-                // Vista Home
-                home_title: "Bienvenido a Data with Roots",
-                home_desc: "Una aplicación web interactiva diseñada para predecir el precio de celulares usados en función de su antigüedad en meses.",
-                home_btn_explore: "Explorar Conceptos de ML",
-                home_btn_predict: "Probar Modelo Predictivo",
+                // Regresión Lineal (Conceptos)
+                regc_title: "Conceptos de Regresión Lineal",
+                regc_sub1: "¿Qué es la Regresión Lineal?",
+                regc_p1: "La Regresión Lineal es un algoritmo de aprendizaje supervisado que modela la relación matemática entre una variable de entrada independiente (X) y una variable objetivo dependiente continua (Y) utilizando una línea recta.",
+                regc_varx_title: "Variable Independiente (X):",
+                regc_varx_desc: "El factor predictor de entrada (ej., Antigüedad del teléfono móvil en <strong>meses</strong>).",
+                regc_vary_title: "Variable Dependiente (Y):",
+                regc_vary_desc: "El objetivo de salida a predecir (ej., Precio de mercado estimado en <strong>COP</strong>).",
 
-                // Vista ML Concepts
-                concepts_title: "Conceptos Fundamentales de Machine Learning",
-                concepts_c1_title: "¿Qué es el Aprendizaje Automático?",
-                concepts_c1_text: "El Aprendizaje Automático es una rama de la Inteligencia Artificial que permite a los sistemas informáticos aprender y mejorar automáticamente a partir de la experiencia sin ser programados explícitamente.",
-                concepts_c2_title: "Propósito Principal",
-                concepts_c2_text: "Identificar patrones subyacentes en datos históricos para realizar predicciones, clasificaciones o descubrimientos automatizados sobre datos nuevos.",
-                concepts_c3_title: "Relación: Datos → Entrenamiento → Modelo → Predicciones",
-                concepts_c3_text: "Los <strong>Datos</strong> en bruto alimentan el algoritmo de <strong>Entrenamiento</strong>, ajustando parámetros matemáticos para construir un <strong>Modelo</strong> optimizado que genera <strong>Predicciones</strong> confiables.",
-                concepts_c3_alert: "<strong>Importancia de los Datos:</strong> Sin datos de alta calidad, limpios y representativos, los modelos de Aprendizaje Automático no pueden aprender patrones válidos.",
+                // Regresión Lineal (Aplicación)
+                regapp_title: "Regresión Lineal - Predicción de Precio de Celulares Usados",
+                regapp_ctx_title: "1. Contexto del Problema",
+                regapp_ctx_text: "Analizamos la depreciación comercial en el mercado de smartphones usados para estimar el valor monetario de reventa de un celular según su antigüedad en meses.",
+                regapp_var_title: "2. Variables del Modelo",
+                regapp_var_list: "<li><strong>Variable Independiente (X):</strong> Antigüedad (Cuantitativa, medida en <strong>Meses</strong>).</li><li><strong>Variable Dependiente (Y):</strong> Precio (Cuantitativo, medido en <strong>COP - Pesos Colombianos</strong>).</li>",
+                regapp_data_title: "3. Información del Conjunto de Datos",
+                regapp_data_rec: "Número de Registros:",
+                regapp_data_src: "<strong>Fuente:</strong> Dataset histórico de transacciones del mercado de smartphones usados.",
+                regapp_data_cur: "<strong>Moneda:</strong> COP ($ Pesos Colombianos).",
+                regapp_plot_title: "4. Visualización de Datos y Línea de Regresión",
+                regapp_form_title: "6. Formulario de Predicción Interactivo",
+                regapp_form_lbl: "Ingrese la antigüedad del celular (en meses):",
+                regapp_form_btn: "Calcular Precio (COP)",
+                regapp_res_title: "Precio Estimado:",
+                regapp_res_lbl1: "Valor predicho para un celular con",
+                regapp_res_lbl2: "meses de uso.",
 
-                // Caso de Uso 1 (Anti-Cheat)
-                uc1_badge: "Caso de Uso 1 — Videojuegos y Tecnología",
-                uc1_title: "Detección Anti-Trampas Predictiva en Juegos Multijugador",
-                uc1_subtitle: "Uso de Machine Learning para identificar jugadores que usan programas no autorizados (Aimbots, Wallhacks) en juegos competitivos online.",
+                // Regresión Logística (Conceptos, Aplicación, Métricas)
+                logc_title: "Conceptos de Regresión Logística Binaria",
+                logc_q1: "¿Qué es la Regresión Logística?",
+                logc_a1: "La Regresión Logística es un algoritmo de aprendizaje supervisado utilizado para predecir la probabilidad de un resultado categórico a partir de variables de entrada.",
+                logc_q2: "¿Por qué es Clasificación?",
+                logc_a2: "Aunque utiliza una ecuación similar a la regresión lineal, su resultado pasa por una Función Sigmoide para acotar la probabilidad entre 0 y 1, mapeando directamente a clases discretas.",
+                logc_q3: "¿Qué es la Clasificación Binaria?",
+                logc_a3: "Un problema de clasificación donde la variable objetivo posee exactamente dos posibles etiquetas mutuamente excluyentes (ej. 0 = No / 1 = Sí).",
+                logc_q4: "Umbral de Clasificación",
+                logc_a4: "El límite de decisión (comúnmente 0.5) utilizado para transformar probabilidades numéricas en etiquetas definitivas de clase.",
+                logc_diff_title: "Diferencia: Regresión Lineal vs Logística",
+                logc_diff_text: "La Regresión Lineal predice valores continuos (ej. precios), mientras que la Regresión Logística predice probabilidades para resultados categóricos (ej. comprar o no comprar).",
+                loga_title: "Regresión Logística — Decisión de Compra en E-commerce",
+                loga_sum_title: "1. Resumen del Dataset",
+                loga_form_title: "2. Formulario Interactivo de Clasificación",
+                loga_input_label: "Tiempo de Navegación del Usuario (Minutos):",
+                loga_btn: "Clasificar Decisión de Compra",
+                loga_plot_title: "3. Visualización de Datos y Curva Sigmoide Ajustada",
+                logm_title: "Regresión Logística — Métricas de Evaluación (Conjunto de Prueba 20%)",
+                logm_c1: "Clase 1 (Compra)",
+                logm_c0: "Clase 0 (Abandono)",
+
+                // KNN (Conceptos, Aplicación, Métricas)
+                knnc_title: "Conceptos de K-Nearest Neighbors (KNN)",
+                knnc_q1: "¿Qué es K-Nearest Neighbors?",
+                knnc_a1: "KNN es un algoritmo de clasificación supervisado no paramétrico que asigna una nueva observación a la clase mayoritaria entre sus 'K' vecinos más cercanos en el espacio de características.",
+                knnc_q2: "¿Cómo funciona KNN?",
+                knnc_a2: "Calcula la distancia (habitualmente euclidiana) entre el nuevo dato y todos los puntos de entrenamiento, selecciona los K más cercanos y realiza una votación por mayoría.",
+                knnc_adv_title: "Principales Ventajas",
+                knnc_adv_list: "<li>Fácil de comprender e implementar.</li><li>No requiere fase de entrenamiento explícita (Aprendizaje Vago / Lazy).</li><li>Se adapta de forma natural a múltiples características de entrada.</li>",
+                knnc_lim_title: "Limitaciones",
+                knnc_lim_list: "<li>Sensible a la escala de las variables (requiere estandarización).</li><li>Costoso computacionalmente con datasets muy grandes.</li><li>Sensible a variables irrelevantes o ruido.</li>",
+                knna_title: "K-Nearest Neighbors — Clasificador de Promoción Laboral",
+                knna_sum_title: "1. Resumen del Dataset KNN",
+                knna_form_title: "2. Formulario Interactivo Multivariable",
+                knna_exp_label: "Experiencia (Años):",
+                knna_score_label: "Puntaje Técnico (0-100):",
+                knna_proj_label: "Proyectos (1-10):",
+                knna_btn: "Evaluar Promoción Laboral",
+                knna_plot_title: "3. Gráfica de Dispersión y Agrupamiento Multivariable",
+                knnm_title: "K-Nearest Neighbors — Métricas de Evaluación (Conjunto de Prueba 20%)",
+                knnm_c1: "Clase 1 (Promovido)",
+                knnm_c0: "Clase 0 (No Promovido)",
+
+                // Métricas Globales
+                metric_accuracy: "EXACTITUD (ACCURACY)", metric_precision: "PRECISIÓN (PRECISION)",
+                metric_acc_desc: "Porcentaje de clasificaciones correctas sobre el total", metric_prec_desc: "Proporción de identificaciones positivas que fueron correctas",
+                cm_title: "Detalles de la Matriz de Confusión", cm_actual: "Clase Real", cm_predicted: "Clase Predicha",
+                cm_tp: "Verdadero Positivo (VP)", cm_fp: "Falso Positivo (FP)", cm_fn: "Falso Negativo (FN)", cm_tn: "Verdadero Negativo (VN)",
+
+                // Casos de Uso 1
+                uc1_badge: "Caso de Uso 1 — Gaming y Tecnología",
+                uc1_title: "Detección Predictiva Anti-Cheat en Juegos Multijugador",
+                uc1_subtitle: "Uso de Machine Learning para identificar jugadores que utilizan software no autorizado (Aimbots, Wallhacks) en juegos competitivos online.",
                 uc1_ctx_title: "🎯 Contexto del Problema",
-                uc1_ctx_text: "En los eSports competitivos, el software de trampas destruye la equidad del juego, frustrando a los usuarios legítimos y causando pérdidas financieras masivas por abandono.",
+                uc1_ctx_text: "En los eSports competitivos, el software malicioso de trampas arruina la equidad, frustrando a los jugadores legítimos y causando pérdidas financieras masivas por abandono de jugadores.",
                 uc1_data_title: "📊 Datos Requeridos",
-                uc1_data_list: "<li>Velocidad angular del mouse y precisión del puntero.</li><li>Porcentaje de precisión de disparos a la cabeza (Headshots).</li><li>Tiempos de reacción en milisegundos tras la aparición del enemigo.</li><li>Trayectorias de movimiento en el juego y coordenadas del mapa.</li>",
+                uc1_data_list: "<li>Velocidad angular del ratón y precisión de seguimiento de la mira.</li><li>Porcentaje de precisión de tiros a la cabeza (Headshots).</li><li>Tiempos de reacción en milisegundos tras la aparición del enemigo.</li><li>Trayectorias de movimiento en el juego y coordenadas del mapa.</li>",
                 uc1_m1_title: "🤖 Tipo de Machine Learning",
                 uc1_m1_text: "<strong>Aprendizaje Supervisado (Clasificación)</strong> y Detección de Anomalías.",
                 uc1_m2_title: "🔮 Objetivo del Modelo",
-                uc1_m2_text: "Clasificar la telemetría de la partida en tiempo real como <em>'Humano Orgánico'</em> o <em>'Bot Anómalo (TRAMPA)'</em>.",
+                uc1_m2_text: "Clasificar la telemetría de la partida en tiempo real como <em>\"Humano Orgánico\"</em> o <em>\"Bot Anómalo (TRAMPA)\"</em>.",
                 uc1_m3_title: "💡 Beneficio Potencial",
-                uc1_m3_text: "Suspensión automática e instantánea antes de que los tramposos afecten las tablas de clasificación globales.",
+                uc1_m3_text: "Suspensión instantánea automatizada antes de que los tramposos afecten las tablas de clasificación competitivas globales.",
                 uc1_ex_title: "📌 Ejemplo Práctico",
-                uc1_ex_text: "El modelo evalúa la telemetría durante una partida FPS. Detecta 8 disparos a la cabeza consecutivos en 0.15 segundos sin visibilidad previa. Al compararlo con los patrones humanos, calcula un <strong>99.4% de probabilidad de trampa</strong> e inicia una suspensión temporal automática.",
+                uc1_ex_text: "El modelo evalúa la telemetría del jugador durante una partida FPS. Detecta 8 tiros a la cabeza consecutivos en 0.15 segundos sin línea de visión. Comparando esto contra líneas base de rendimiento humano, calcula una <strong>probabilidad de trampa del 99.4%</strong> y activa un ban temporal automático.",
 
-                // Caso de Uso 2 (Mantenimiento Predictivo Data Centers)
+                // Casos de Uso 2
                 uc2_badge: "Caso de Uso 2 — Nube e Infraestructura",
                 uc2_title: "Mantenimiento Predictivo en Data Centers de Renderizado",
-                uc2_subtitle: "Anticipación de fallas críticas de hardware (GPUs/CPUs) en granjas de procesamiento en la nube.",
+                uc2_subtitle: "Anticipación de fallos críticos de hardware (GPUs/CPUs) en granjas de renderizado en la nube e infraestructura de servidores.",
                 uc2_ctx_title: "⚙️ Contexto del Problema",
-                uc2_ctx_text: "Los estudios de videojuegos y plataformas cloud operan miles de servidores 24/7. Las fallas repentinas en GPUs causan interrupciones no planificadas y pérdida de información.",
+                uc2_ctx_text: "Los estudios de desarrollo de juegos y plataformas de cloud gaming operan miles de servidores 24/7. Fallos repentinos de hardware GPU durante trabajos de renderizado de alta carga provocan caídas del servidor y pérdida de datos.",
                 uc2_data_title: "📈 Datos Requeridos",
-                uc2_data_list: "<li>Temperatura del procesador (°C) y velocidad RPM del ventilador.</li><li>Variaciones de voltaje y consumo de energía (Watts).</li><li>Horas acumuladas de uso continuo a máxima capacidad.</li><li>Tasa de errores de memoria registrados en VRAM.</li>",
+                uc2_data_list: "<li>Temperatura del núcleo (°C) y velocidad de ventiladores (RPM).</li><li>Fluctuaciones de voltaje y consumo de energía (Watts).</li><li>Horas de operación acumuladas bajo carga máxima.</li><li>Tasas de error de memoria registradas en la VRAM.</li>",
                 uc2_m1_title: "🤖 Tipo de Machine Learning",
                 uc2_m1_text: "<strong>Aprendizaje Supervisado (Regresión)</strong>.",
                 uc2_m2_title: "🔮 Objetivo del Modelo",
-                uc2_m2_text: "Predecir la <strong>Vida Útil Restante (RUL)</strong> en horas antes de que un componente falle.",
+                uc2_m2_text: "Predecir la <strong>Vida Útil Restante (RUL)</strong> en horas operativas antes de que un componente de hardware se sobrecaliente o falle.",
                 uc2_m3_title: "💡 Beneficio Potencial",
-                uc2_m3_text: "Minimiza el tiempo de inactividad no planificado y optimiza los calendarios de sustitución de piezas.",
+                uc2_m3_text: "Minimiza el tiempo de inactividad no planificado y optimiza los calendarios de reemplazo de hardware.",
                 uc2_ex_title: "📌 Ejemplo Práctico",
-                uc2_ex_text: "El sensor del servidor registra picos de 88°C y pérdida de eficiencia en la GPU #42. El modelo predice una falla en <strong>36 horas</strong>, desviando el procesamiento y alertando al equipo para un reemplazo preventivo.",
-
-                // Vista Conceptos de Regresión Lineal
-                regc_title: "Conceptos de Regresión Lineal",
-                regc_sub1: "¿Qué es la Regresión Lineal?",
-                regc_p1: "La Regresión Lineal es un algoritmo de aprendizaje supervisado que modela la relación matemática entre una variable de entrada independiente ($X$) y una variable objetivo continua dependiente ($Y$) mediante una recta de regresión.",
-                regc_varx_title: "Variable Independiente (X):",
-                regc_varx_desc: "El factor predictivo de entrada (ej. Antigüedad del celular en <strong>meses</strong>).",
-                regc_vary_title: "Variable Dependiente (Y):",
-                regc_vary_desc: "El objetivo a predecir (ej. Precio estimado de mercado en <strong>COP</strong>).",
-                regc_sub2: "Elementos Clave",
-                regc_list: "<li><strong>Relación entre variables:</strong> Analiza cómo cambia la variable dependiente al variar la variable independiente.</li><li><strong>Línea de regresión:</strong> La línea de tendencia de mejor ajuste calculada para minimizar los errores sobre todos los datos.</li><li><strong>Predicción:</strong> Cálculo de valores esperados ante nuevas entradas utilizando la recta ajustada.</li>"
+                uc2_ex_text: "Un sensor en el rack registra picos térmicos de hasta 88°C combinados con pérdida de eficiencia en el ventilador de la GPU #42. El modelo predice un fallo de hardware en <strong>36 horas</strong>, redirigiendo automáticamente las cargas de trabajo activas y alertando a los técnicos para un reemplazo proactivo.",
             }
         };
 
-        // Función de conmutación del estado persistente
         function setLanguage(lang) {
             localStorage.setItem('preferred_lang', lang);
             updateUI(lang);
         }
 
-        // Iteración sobre nodos declarativos con atributo data-i18n
         function updateUI(lang) {
             const flagElem = document.getElementById('currentLangFlag');
             const textElem = document.getElementById('currentLangText');
@@ -279,17 +362,11 @@
             window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
         }
 
-        // Inicialización al completar el parseo del DOM
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('preferred_lang') || 'en';
             updateUI(savedLang);
         });
-
-        // Ejecución inmediata para evitar parpadeos visuales
-        const initialLang = localStorage.getItem('preferred_lang') || 'en';
-        updateUI(initialLang);
     </script>
-
     {% block scripts %}{% endblock %}
 </body>
 </html>
