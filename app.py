@@ -152,3 +152,7 @@ def predict_phone():
     return render_template('regression_application.html', prediction=precio_predicho) # 4. Envia el resultado de vuelta a la plantilla HTML
 
 
+@app.route("/clouter")
+def Cluster():
+    info = clusteringExample.implementClustering()
+    return info["Results"]
