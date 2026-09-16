@@ -3,12 +3,13 @@ import numpy as np
 import io
 import base64
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg')  # Previene errores de hilos de ejecución en servidores Flask
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
 def ejecutar_entrenamiento_completo(ruta_csv='dataset_appointments.csv'):
+    """Carga el dataset, aplica el escalamiento y calcula las distancias a los 3 centroides."""
     df = pd.read_csv(ruta_csv)
     columnas_analisis = ['Age', 'Scholarship', 'Hipertension', 'Diabetes', 'Alcoholism', 'Handcap', 'SMS_received']
     
@@ -16,7 +17,7 @@ def ejecutar_entrenamiento_completo(ruta_csv='dataset_appointments.csv'):
     X['No_show_numeric'] = df['No-show'].apply(lambda x: 1 if x == 'Yes' else 0)
     X['Gender_numeric'] = df['Gender'].apply(lambda x: 1 if x == 'F' else 0)
     
-    # Estandarización crucial para distancias homogéneas
+    # Estandarización obligatoria para algoritmos basados en distancias como K-Means
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
@@ -24,20 +25,17 @@ def ejecutar_entrenamiento_completo(ruta_csv='dataset_appointments.csv'):
     kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
     df['Cluster_Asignado'] = kmeans.fit_predict(X_scaled)
     
-    # --- NUEVA LÓGICA: TABLA DE DISTANCIAS A CENTROIDES ---
-    # kmeans.transform() calcula automáticamente la distancia euclidiana de cada dato a los 3 centroides
+    # transform() calcula la distancia euclidiana de cada fila a los 3 centroides
     distancias = kmeans.transform(X_scaled)
-    
     df['Distancia_Centroide_0'] = distancias[:, 0]
     df['Distancia_Centroide_1'] = distancias[:, 1]
     df['Distancia_Centroide_2'] = distancias[:, 2]
     
-    # Guardamos los resultados con las nuevas columnas de distancias
     df.to_csv('dataset_kmeans_resultados.csv', index=False)
     return df
 
-def generate_kmeans_plot():
-    """Genera la gráfica de clústeres forzando el entrenamiento si el archivo es viejo."""
+def generate_kmeans_plot(variable_y='Hipertension'):
+    """Genera la gráfica de clústeres adaptando el eje Y dinámicamente según la selección."""
     try:
         df = pd.read_csv('dataset_kmeans_resultados.csv')
         if 'Distancia_Centroide_0' not in df.columns:
@@ -46,14 +44,36 @@ def generate_kmeans_plot():
         df = ejecutar_entrenamiento_completo()
 
     plt.figure(figsize=(8, 5))
-    jitter_y = df['Hipertension'] + np.random.normal(0, 0.04, size=len(df))
-    scatter = plt.scatter(df['Age'], jitter_y, c=df['Cluster_Asignado'], cmap='viridis', alpha=0.6, edgecolors='k')
     
-    plt.title('Segmentación de Pacientes (K-Means Clustering)')
+    # Si la variable elegida es binaria o escala discreta baja, aplicamos un leve jitter
+    if variable_y in ['Hipertension', 'Diabetes', 'Scholarship', 'Alcoholism', 'SMS_received', 'Handcap']:
+        valores_y = df[variable_y] + np.random.normal(0, 0.04, size=len(df))
+    else:
+        valores_y = df[variable_y]
+
+    scatter = plt.scatter(df['Age'], valores_y, c=df['Cluster_Asignado'], cmap='viridis', alpha=0.6, edgecolors='k')
+    
+    titulos_ejes = {
+        'Hipertension': 'Hipertensión (Con dispersión aleatoria)',
+        'Diabetes': 'Diabetes (Con dispersión aleatoria)',
+        'Scholarship': 'Programa Bolsa Família (Con dispersión)',
+        'Alcoholism': 'Alcoholismo (Con dispersión aleatoria)',
+        'SMS_received': 'SMS Recordatorio Recibido (Con dispersión)',
+        'Handcap': 'Nivel de Discapacidad'
+    }
+    
+    label_y = titulos_ejes.get(variable_y, variable_y)
+    
+    plt.title(f'Segmentación de Pacientes - Edad vs {variable_y}')
     plt.xlabel('Edad del Paciente')
-    plt.ylabel('Hipertensión (Con dispersión aleatoria)')
+    plt.ylabel(label_y)
     plt.grid(True, linestyle='--', alpha=0.5)
-    plt.yticks([0, 1], ['No', 'Sí'])
+    
+    if variable_y in ['Hipertension', 'Diabetes', 'Scholarship', 'Alcoholism', 'SMS_received']:
+        plt.yticks([0, 1], ['No', 'Sí'])
+    elif variable_y == 'Handcap':
+        plt.yticks([0, 1, 2, 3, 4])
+        
     plt.legend(*scatter.legend_elements(), title="Clústeres")
     
     img = io.BytesIO()
@@ -64,10 +84,9 @@ def generate_kmeans_plot():
     return f"data:image/png;base64,{plot_url}"
 
 def get_kmeans_summary():
-    """Retorna las estadísticas descriptivas y la matriz de distancias a centroides."""
+    """Retorna las estadísticas descriptivas por grupo y la matriz de distancias a centroides."""
     try:
         df = pd.read_csv('dataset_kmeans_resultados.csv')
-        # Si el CSV es antiguo y no tiene las distancias, forzamos un re-entrenamiento limpio
         if 'Distancia_Centroide_0' not in df.columns:
             raise KeyError()
     except (FileNotFoundError, KeyError):
@@ -84,7 +103,7 @@ def get_kmeans_summary():
                 'inasistencia_pct': round(float(cluster_data['No-show'].apply(lambda x: 1 if x=='Yes' else 0).mean() * 100), 1)
             }
             
-    # Mapeo controlado y seguro de los primeros 15 registros para la tabla visual
+    # Mapeo de los primeros 15 registros para la tabla de distancias
     tabla_distancias = []
     for idx, row in df.head(15).iterrows():
         tabla_distancias.append({
@@ -101,3 +120,7 @@ def get_kmeans_summary():
         'grupos': resumen_grupos,
         'tabla_distancias': tabla_distancias
     }
+
+if __name__ == "__main__":
+    ejecutar_entrenamiento_completo()
+    print("Entrenamiento local completado.")

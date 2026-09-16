@@ -191,16 +191,20 @@ def kmeans_concepts():
     """Vista teórica del algoritmo K-Means."""
     return render_template('kmeans_concepts.html')
 
-@app.route('/kmeans/application')
+@app.route('/kmeans/application', methods=['GET', 'POST'])
 def kmeans_application():
-    """Aplicación que muestra la segmentación de citas médicas de K-Means."""
-    plot_url = kmeans_appointments.generate_kmeans_plot()
+    """Aplicación interactiva que permite elegir el ítem del eje Y para visualizar K-Means."""
+    # Capturamos la variable elegida en el selector, por defecto será 'Hipertension'
+    variable_seleccionada = request.args.get('variable_y', 'Hipertension')
+    
+    # Pasamos la variable elegida al generador de gráficos
+    plot_url = kmeans_appointments.generate_kmeans_plot(variable_seleccionada)
     summary = kmeans_appointments.get_kmeans_summary()
     
-    # ASEGÚRATE DE QUE TENGA LA 't' (appointments):
     return render_template('kmeans_appointments.html',
                            plot_url=plot_url,
-                           summary=summary)
+                           summary=summary,
+                           variable_seleccionada=variable_seleccionada) # Pasamos la variable para mantener el selector activo
 
 if __name__ == '__main__':
     app.run(debug=True)

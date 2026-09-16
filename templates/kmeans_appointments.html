@@ -6,15 +6,30 @@
     <p class="text-muted">Registros Totales Procesados: <strong class="badge bg-secondary fs-6">{{ summary.total_records }}</strong></p>
 
     <div class="row g-4 mt-2">
-        <!-- Bloque Izquierdo: Visualización Gráfica -->
+        <!-- Bloque Izquierdo: Selector e Imagen Gráfica -->
         <div class="col-12 col-lg-7">
-            <div class="p-3 border rounded bg-light text-center mb-4">
-                <h3 class="h5 fw-bold text-secondary mb-3">Visualización de Clústeres (Edad vs Hipertensión)</h3>
-                {% if plot_url %}
-                    <img src="{{ plot_url }}" alt="Gráfica de Clústeres K-Means" class="img-fluid rounded shadow-sm border">
-                {% else %}
-                    <p class="text-danger">No se pudo renderizar la gráfica dinámicamente.</p>
-                {% endif %}
+            <div class="p-3 border rounded bg-white shadow-sm mb-4">
+                
+                <!-- SELECTOR INTERACTIVO DE ITEMS PARA EL EJE Y -->
+                <form method="GET" action="/kmeans/application" class="mb-3">
+                    <label for="variable_y" class="form-label fw-bold text-dark small">🔄 Cambiar eje analítico (Eje Y):</label>
+                    <select name="variable_y" id="variable_y" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <option value="Hipertension" {% if variable_seleccionada == 'Hipertension' %}selected{% endif %}>Hipertensión</option>
+                        <option value="Diabetes" {% if variable_seleccionada == 'Diabetes' %}selected{% endif %}>Diabetes</option>
+                        <option value="Scholarship" {% if variable_seleccionada == 'Scholarship' %}selected{% endif %}>Programa Bolsa Família</option>
+                        <option value="Alcoholism" {% if variable_seleccionada == 'Alcoholism' %}selected{% endif %}>Alcoholismo</option>
+                        <option value="SMS_received" {% if variable_seleccionada == 'SMS_received' %}selected{% endif %}>SMS Recordatorio Recibido</option>
+                        <option value="Handcap" {% if variable_seleccionada == 'Handcap' %}selected{% endif %}>Nivel de Discapacidad</option>
+                    </select>
+                </form>
+
+                <div class="text-center bg-light p-2 rounded">
+                    {% if plot_url %}
+                        <img src="{{ plot_url }}" alt="Gráfica de Clústeres K-Means" class="img-fluid rounded shadow-sm border">
+                    {% else %}
+                        <p class="text-danger">No se pudo renderizar la gráfica dinámicamente.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
@@ -37,7 +52,7 @@
         </div>
     </div>
 
-    <!-- SECCIÓN NUEVA: TABLA DE DISTANCIAS MATEMÁTICAS A CENTROIDES -->
+    <!-- SECCIÓN DE DISTANCIAS MATEMÁTICAS A CENTROIDES -->
     <div class="row mt-4">
         <div class="col-12">
             <div class="p-3 border rounded bg-white">
@@ -80,3 +95,4 @@
     </div>
 </div>
 {% endblock %}
+
