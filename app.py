@@ -2,7 +2,7 @@
 # MÓDULO PRINCIPAL: app.py
 # DESCRIPCIÓN: Servidor web Flask que orquesta el enrutamiento de las vistas,
 #              la recepción de datos de formularios mediante metodos seguros (.get)
-#              y el llamado a los modelos de Regresión Lineal, Logística y KNN.
+#              y el llamado a los modelos de Regresión Lineal, Logística, KNN y K-Means.
 # ==============================================================================
 
 from flask import Flask, render_template, request
@@ -11,6 +11,7 @@ from flask import Flask, render_template, request
 from LinearRegressionPhone import predict_price, generate_plot, get_dataset_summary
 import logistic_model
 import knn_model
+import kmeans_appointments  # <--- NUEVA IMPORTACIÓN PARA K-MEANS
 
 # Inicialización de la aplicación Flask
 app = Flask(__name__)
@@ -182,5 +183,25 @@ def knn_metrics():
     metrics = knn_model.get_knn_metrics()
     return render_template('knn_metrics.html', metrics=metrics)
 
+# ==============================================================================
+# RUTAS DE ACTIVIDAD 2 — K-MEANS CLUSTERING (NUEVA VENTANA)
+# ==============================================================================
+@app.route('/kmeans/concepts')
+def kmeans_concepts():
+    """Vista teórica del algoritmo K-Means."""
+    return render_template('kmeans_concepts.html')
+
+@app.route('/kmeans/application')
+def kmeans_application():
+    """Aplicación que muestra la segmentación de citas médicas de K-Means."""
+    plot_url = kmeans_appointments.generate_kmeans_plot()
+    summary = kmeans_appointments.get_kmeans_summary()
+    
+    # ASEGÚRATE DE QUE TENGA LA 't' (appointments):
+    return render_template('kmeans_appointments.html',
+                           plot_url=plot_url,
+                           summary=summary)
+
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm p-4 bg-white rounded">
+    <h1 class="text-dark fw-bold mb-2">Segmentación Inteligente de Pacientes (K-Means)</h1>
+    <p class="text-muted">Registros Totales Procesados: <strong class="badge bg-secondary fs-6">{{ summary.total_records }}</strong></p>
+
+    <div class="row g-4 mt-2">
+        <!-- Bloque Izquierdo: Visualización Gráfica -->
+        <div class="col-12 col-lg-7">
+            <div class="p-3 border rounded bg-light text-center mb-4">
+                <h3 class="h5 fw-bold text-secondary mb-3">Visualización de Clústeres (Edad vs Hipertensión)</h3>
+                {% if plot_url %}
+                    <img src="{{ plot_url }}" alt="Gráfica de Clústeres K-Means" class="img-fluid rounded shadow-sm border">
+                {% else %}
+                    <p class="text-danger">No se pudo renderizar la gráfica dinámicamente.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Bloque Derecho: Listado de Tarjetas Analíticas -->
+        <div class="col-12 col-lg-5">
+            <h3 class="h5 fw-bold text-secondary mb-3">Resultados Analíticos por Grupo</h3>
+            {% for nombre_grupo, info in summary.grupos.items() %}
+                <div class="card mb-3 border-start border-info border-4 shadow-sm">
+                    <div class="card-body py-3">
+                        <h4 class="h6 card-title fw-bold text-uppercase text-info mb-1">{{ nombre_grupo | replace('_', ' ') }}</h4>
+                        <p class="card-text small mb-2 text-muted"><strong>Pacientes asignados:</strong> {{ info.total }}</p>
+                        <ul class="list-unstyled mb-0 small text-dark">
+                            <li class="mb-1">🔹 Edad promedio: <strong>{{ info.edad_promedio }} años</strong></li>
+                            <li class="mb-1">🔹 Tasa de Hipertensión: <strong>{{ info.hipertension_pct }}%</strong></li>
+                            <li class="mb-0">🔹 Inasistencia a citas (No-show): <strong>{{ info.inasistencia_pct }}%</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- SECCIÓN NUEVA: TABLA DE DISTANCIAS MATEMÁTICAS A CENTROIDES -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="p-3 border rounded bg-white">
+                <h3 class="h5 fw-bold text-dark mb-1">📐 Matriz de Distancias Euclidianas a Centroides</h3>
+                <p class="text-muted small mb-3">Muestra la distancia geométrica desde las características estandarizadas de cada paciente hacia los centros de los 3 clústeres identificados. El dato se asigna al clúster con la distancia más corta (mínima).</p>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle table-sm border text-center">
+                        <thead class="table-dark small">
+                            <tr>
+                                <th>ID Paciente</th>
+                                <th>Edad</th>
+                                <th class="text-info">Distancia a Centroide 0</th>
+                                <th class="text-warning">Distancia a Centroide 1</th>
+                                <th class="text-success">Distancia a Centroide 2</th>
+                                <th>Clúster Asignado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            {% for fila in summary.tabla_distancias %}
+                            <tr>
+                                <td class="fw-bold text-secondary">#{{ fila.id_paciente }}</td>
+                                <td>{{ fila.edad }} años</td>
+                                <td class="text-info font-monospace">{{ fila.d0 }}</td>
+                                <td class="text-warning font-monospace">{{ fila.d1 }}</td>
+                                <td class="text-success font-monospace">{{ fila.d2 }}</td>
+                                <td>
+                                    <span class="badge {% if fila.cluster_real == 0 %}bg-info text-dark{% elif fila.cluster_real == 1 %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                                        Clúster {{ fila.cluster_real }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-end text-muted small mt-1">* Se muestran los primeros 15 registros del dataset.</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

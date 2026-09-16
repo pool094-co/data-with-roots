@@ -66,6 +66,15 @@
                             <li><a class="dropdown-item" href="/knn/metrics" data-i18n="nav_metrics">Evaluation Metrics</a></li>
                         </ul>
                     </li>
+                    <!-- PESTAÑA AGREGADA: APRENDIZAJE NO SUPERVISADO (K-Means) -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="unsupDropdown" data-bs-toggle="dropdown" data-i18n="nav_unsupervised">Unsupervised</a>
+                        <ul class="dropdown-menu">
+                            <li><span class="dropdown-item-text fw-bold text-info" data-i18n="nav_kmeans">K-Means Clustering</span></li>
+                            <li><a class="dropdown-item" href="/kmeans/concepts" data-i18n="nav_concepts">Concepts</a></li>
+                            <li><a class="dropdown-item" href="/kmeans/application" data-i18n="nav_app">Application</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -95,6 +104,7 @@
                 nav_usecases: "Use Cases", nav_uc1: "Use Case 1", nav_uc2: "Use Case 2", nav_uc3: "Use Case 3", nav_uc4: "Use Case 4",
                 nav_supervised: "Supervised", nav_linreg: "Linear Regression", nav_logreg: "Logistic Regression",
                 nav_knn: "K-Nearest Neighbors (KNN)", nav_app: "Application", nav_metrics: "Evaluation Metrics",
+                nav_unsupervised: "Unsupervised", nav_kmeans: "K-Means Clustering",
                 footer_text: "© 2026 Data with Roots — All rights reserved.",
 
                 // Regresión Lineal (Conceptos)
@@ -168,6 +178,19 @@
                 knnm_c1: "Class 1 (Promoted)",
                 knnm_c0: "Class 0 (Not Promoted)",
 
+                // K-Means (Conceptos, Aplicación)
+                kmc_title: "K-Means Clustering Concepts",
+                kmc_q1: "What is K-Means Clustering?",
+                kmc_a1: "K-Means is an unsupervised learning algorithm that groups unlabeled data into 'K' distinct clusters based on feature similarity, without any predefined target variable.",
+                kmc_q2: "How does K-Means work?",
+                kmc_a2: "It randomly places K centroids, assigns each data point to its nearest centroid, recalculates each centroid as the mean of its assigned points, and repeats until the centroids stop moving.",
+                kma_title: "K-Means Clustering — Application",
+                kma_sum_title: "1. Dataset Summary",
+                kma_form_title: "2. Interactive Clustering Form",
+                kma_btn: "Run Clustering",
+                kma_plot_title: "3. Cluster Visualization",
+                kma_feat1_label: "Annual Income:", kma_feat2_label: "Spending Score (0-100):", kma_result_prefix: "This point belongs to",
+
                 // Métricas Globales
                 metric_accuracy: "ACCURACY", metric_precision: "PRECISION",
                 metric_acc_desc: "Percentage of correct total classifications", metric_prec_desc: "Proportion of positive identifications that were correct",
@@ -220,6 +243,7 @@
                 nav_usecases: "Casos de Uso", nav_uc1: "Caso de Uso 1", nav_uc2: "Caso de Uso 2", nav_uc3: "Caso de Uso 3", nav_uc4: "Caso de Uso 4",
                 nav_supervised: "Supervisado", nav_linreg: "Regresión Lineal", nav_logreg: "Regresión Logística",
                 nav_knn: "K-Nearest Neighbors (KNN)", nav_app: "Aplicación Práctica", nav_metrics: "Métricas de Evaluación",
+                nav_unsupervised: "No Supervisado", nav_kmeans: "Agrupamiento K-Means",
                 footer_text: "© 2026 Data with Roots — Todos los derechos reservados.",
 
                 // Regresión Lineal (Conceptos)
@@ -292,6 +316,19 @@
                 knnm_title: "K-Nearest Neighbors — Métricas de Evaluación (Conjunto de Prueba 20%)",
                 knnm_c1: "Clase 1 (Promovido)",
                 knnm_c0: "Clase 0 (No Promovido)",
+
+                // K-Means (Conceptos, Aplicación)
+                kmc_title: "Conceptos de Agrupamiento K-Means",
+                kmc_q1: "¿Qué es el Agrupamiento K-Means?",
+                kmc_a1: "K-Means es un algoritmo de aprendizaje no supervisado que agrupa datos sin etiquetar en 'K' clústeres distintos según la similitud de sus características, sin ninguna variable objetivo predefinida.",
+                kmc_q2: "¿Cómo funciona K-Means?",
+                kmc_a2: "Ubica K centroides de forma aleatoria, asigna cada dato al centroide más cercano, recalcula cada centroide como el promedio de sus puntos asignados, y repite el proceso hasta que los centroides dejan de moverse.",
+                kma_title: "Agrupamiento K-Means — Aplicación",
+                kma_sum_title: "1. Resumen del Dataset",
+                kma_form_title: "2. Formulario Interactivo de Agrupamiento",
+                kma_btn: "Ejecutar Agrupamiento",
+                kma_plot_title: "3. Visualización de Clústeres",
+                kma_feat1_label: "Ingreso Anual:", kma_feat2_label: "Puntuación de Gasto (0-100):", kma_result_prefix: "Este punto pertenece al",
 
                 // Métricas Globales
                 metric_accuracy: "EXACTITUD (ACCURACY)", metric_precision: "PRECISIÓN (PRECISION)",

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm p-4 bg-white rounded">
+    <h1 class="text-dark fw-bold mb-3">Algoritmo K-Means Clustering</h1>
+    <p class="text-muted fs-5">
+        El algoritmo de K-Means es un método de <strong>aprendizaje no supervisado</strong> que se utiliza para segmentar o agrupar un conjunto de datos desordenados en un número fijo (K) de grupos basados en sus características similares.
+    </p>
+
+    <h3 class="h5 fw-bold text-secondary mt-4 mb-3">Conceptos Clave:</h3>
+    <ul class="list-group list-group-flush mb-4">
+        <li class="list-group-item bg-transparent px-0 py-2">
+            📌 <strong>Centroides:</strong> Son los puntos centrales de cada grupo. El algoritmo los mueve iterativamente para minimizar la distancia matemática hacia los elementos asignados.
+        </li>
+        <li class="list-group-item bg-transparent px-0 py-2">
+            📌 <strong>Distancia Euclidiana:</strong> Es la métrica estándar que utiliza el modelo para calcular qué tan cerca o lejos está un registro respecto a un clúster determinado.
+        </li>
+        <li class="list-group-item bg-transparent px-0 py-2">
+            📌 <strong>Escalamiento de datos (StandardScaler):</strong> Como K-Means depende de distancias, es mandatorio normalizar variables con rangos muy distantes (como Edad e Hipertensión) para que todas tengan el mismo peso estadístico.
+        </li>
+    </ul>
+
+    <div class="alert alert-info border-start border-info border-4 my-2" role="alert">
+        <h4 class="alert-heading fw-bold h5">Aplicación en este proyecto:</h4>
+        <p class="mb-0">
+            Utilizamos K-Means para segmentar una base de datos con registros de citas médicas, logrando clasificar de forma automatizada los perfiles clínicos, vulnerabilidades y niveles de asistencia de los pacientes.
+        </p>
+    </div>
+</div>
+{% endblock %}
