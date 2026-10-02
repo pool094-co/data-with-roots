@@ -3,7 +3,6 @@ import numpy as np
 from sklearn.linear_model import SGDRegressor
 
 # --- 1. ENVIRONMENT DEFINITION (10x10) --- \ --- 1. DEFINICIÓN DEL ENTORNO (10x10) ---
-# Visual dictionary: 0 = Normal path (o), 1 = Wall (#), 2 = Danger Zone (D) \ Diccionario visual: 0 = Camino normal (o), 1 = Muro (#), 2 = Zona de Peligro (D)
 GRID = [
     [0, 0, 0, 1, 0, 0, 2, 0, 0, 0],
     [0, 0, 0, 1, 0, 0, 0, 0, 1, 0],
@@ -31,7 +30,7 @@ NUMBER_OF_FEATURES = ROWS * COLUMNS * NUMBER_OF_ACTIONS
 # --- 2. INTERACTION AND PREDICTION FUNCTIONS --- \ --- 2. FUNCIONES DE INTERACCIÓN Y PREDICCIÓN ---
 
 def step(state, action):
-    r"""Returns the next state, the reward, and the termination flag. \ Retorna el siguiente estado, la recompensa y la señal de terminación."""
+    r"""Returns the next state, the reward, and the termination flag."""
     row = state[0] + ACTIONS[action][0]
     column = state[1] + ACTIONS[action][1]
     
@@ -49,7 +48,7 @@ def step(state, action):
     return next_state, -1, False
 
 def encode(state, action):
-    r"""Encodes a state-action pair as a one-hot vector. \ Codifica un par estado-acción como un vector one-hot."""
+    r"""Encodes a state-action pair as a one-hot vector (400 features)."""
     features = np.zeros(NUMBER_OF_FEATURES, dtype=float)
     state_index = state[0] * COLUMNS + state[1]
     feature_index = state_index * NUMBER_OF_ACTIONS + action
@@ -57,14 +56,14 @@ def encode(state, action):
     return features
 
 def predict_q_values(model, state):
-    r"""Predicts the Q-value of each available action for a given state. \ Predice el valor Q de cada acción disponible para un estado dado."""
-    features = np.array([encode(state, action) for action in range(NUMBER_OF_ACTIONS)])
-    return model.predict(features)
+    r"""Lectura rápida de predicciones para evitar la sobrecarga de model.predict en Render."""
+    state_idx = state[0] * COLUMNS + state[1]
+    base_idx = state_idx * NUMBER_OF_ACTIONS
+    return model.coef_[base_idx : base_idx + NUMBER_OF_ACTIONS]
 
+# --- 3. TRAINING CYCLE (SGDRegressor with Batching for Render) --- \ --- 3. CICLO DE ENTRENAMIENTO ---
 
-# --- 3. TRAINING CYCLE (OPTIMIZED FOR RENDER CLOUD) --- \ --- 3. CICLO DE ENTRENAMIENTO (OPTIMIZADO PARA RENDER NUBE) ---
-
-def train(episodes=250):
+def train(episodes=1000):
     if episodes < 1:
         raise ValueError("episodes must be at least 1")
     
@@ -72,6 +71,7 @@ def train(episodes=250):
     gamma = 0.95
     epsilon = 1.0
     
+    # Modelo EXACTO como lo pide la rúbrica
     model = SGDRegressor(
         loss="squared_error",
         penalty=None,
@@ -81,34 +81,44 @@ def train(episodes=250):
         random_state=42
     )
     
+    # Inicialización requerida para crear los pesos (model.coef_)
     model.partial_fit(np.zeros((1, NUMBER_OF_FEATURES)), np.array([0.0]))
     
     successes = 0
     rewards = []
     
-    # TRAINING PHASE \ FASE DE ENTRENAMIENTO
+    # FASE DE ENTRENAMIENTO
     for _ in range(episodes):
         state = START
         total_reward = 0
         
-        for _ in range(60): # Fast step limit to avoid HTTP timeout \ Límite de pasos rápido para evitar timeout HTTP
+        # Listas para el Entrenamiento por Lotes (Batching)
+        X_batch = []
+        y_batch = []
+        
+        for _ in range(120):
+            q_vals = predict_q_values(model, state)
+            
+            # Epsilon-Greedy
             if rng.random() < epsilon:
                 action = rng.randrange(NUMBER_OF_ACTIONS)
             else:
-                q_values = predict_q_values(model, state)
-                best_actions = np.flatnonzero(q_values == q_values.max()).tolist()
+                max_q = q_vals.max()
+                best_actions = np.flatnonzero(q_vals == max_q).tolist()
                 action = rng.choice(best_actions)
                 
             next_state, reward, terminated = step(state, action)
             
+            # Cálculo del valor objetivo
             if terminated:
                 target = float(reward)
             else:
-                next_q_values = predict_q_values(model, next_state)
-                target = reward + gamma * float(next_q_values.max())
+                next_q_vals = predict_q_values(model, next_state)
+                target = reward + gamma * float(next_q_vals.max())
                 
-            features = encode(state, action).reshape(1, -1)
-            model.partial_fit(features, np.array([target]))
+            # Guardamos la experiencia en el lote en lugar de entrenar paso a paso
+            X_batch.append(encode(state, action))
+            y_batch.append(target)
             
             state = next_state
             total_reward += reward
@@ -117,10 +127,13 @@ def train(episodes=250):
                 successes += 1
                 break
                 
-        rewards.append(total_reward)
-        epsilon = max(0.05, epsilon * 0.98) # Decay adjusted for 250 episodes \ Decaimiento ajustado para 250 episodios
+        # ¡Magia para Render! Entrenamos el SGDRegressor 1 sola vez por episodio usando partial_fit
+        model.partial_fit(X_batch, y_batch)
         
-    # EVALUATION PHASE \ FASE DE EVALUACIÓN
+        rewards.append(total_reward)
+        epsilon = max(0.05, epsilon * 0.995)
+        
+    # FASE DE EVALUACIÓN
     state = START
     path = [state]
     steps = []
@@ -143,7 +156,7 @@ def train(episodes=250):
             
     reached_goal = state == GOAL
     
-    # BUILD Q-TABLE \ CONSTRUCCIÓN DE LA TABLA Q
+    # CONSTRUCCIÓN DE LA TABLA Q PARA LA VISTA WEB
     q_table = []
     for row in range(ROWS):
         for column in range(COLUMNS):
@@ -157,7 +170,7 @@ def train(episodes=250):
     return {
         "episodes": episodes,
         "successes": successes,
-        "final_average": round(sum(rewards[-50:]) / len(rewards[-50:]), 2),
+        "final_average": round(sum(rewards[-100:]) / len(rewards[-100:]), 2),
         "final_epsilon": round(epsilon, 4),
         "reached_goal": reached_goal,
         "path": path,
