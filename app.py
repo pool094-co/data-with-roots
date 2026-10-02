@@ -225,7 +225,7 @@ def rl_application():
     result = None
     if request.method == 'POST':
         # Execute the Q-Learning training cycle \ Ejecutar el ciclo de entrenamiento Q-Learning
-        result = train(episodes=250)
+        result = train(episodes=1000)
         
     # Pass the result and grid settings to Jinja2 template \ Pasar el resultado y la configuración del mapa a la plantilla Jinja2
     return render_template(
