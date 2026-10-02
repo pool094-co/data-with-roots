@@ -216,18 +216,18 @@ def kmeans_application():
 
 @app.route('/reinforcement/concepts')
 def rl_concepts():
-    # [EN] Render the theoretical concepts page \ [ES] Renderizar la página de conceptos teóricos
+    # Render the theoretical concepts page \ Renderizar la página de conceptos teóricos
     return render_template('reinforcement_concepts.html')
 
 @app.route('/reinforcement/application', methods=['GET', 'POST'])
 def rl_application():
-    # [EN] Initialize result as None. Train only on POST request. \ [ES] Inicializar result como None. Entrenar solo en petición POST.
+    # Initialize result as None. Train only on POST request. \ Inicializar result como None. Entrenar solo en petición POST.
     result = None
     if request.method == 'POST':
-        # [EN] Execute the Q-Learning training cycle \ [ES] Ejecutar el ciclo de entrenamiento Q-Learning
-        result = train(episodes=500)
+        # Execute the Q-Learning training cycle \ Ejecutar el ciclo de entrenamiento Q-Learning
+        result = train(episodes=250)
         
-    # [EN] Pass the result and grid settings to Jinja2 template \ [ES] Pasar el resultado y la configuración del mapa a la plantilla Jinja2
+    # Pass the result and grid settings to Jinja2 template \ Pasar el resultado y la configuración del mapa a la plantilla Jinja2
     return render_template(
         'reinforcement_application.html',
         result=result,
