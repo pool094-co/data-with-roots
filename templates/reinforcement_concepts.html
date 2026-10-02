@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4" data-i18n="rlc_title">Reinforcement Learning</h1>
+        <p class="lead" data-i18n="rlc_subtitle">Theoretical Concepts & Project Context</p>
+    </div>
+
+    <div class="alert alert-info shadow-sm mb-4" role="alert">
+        <h4 class="alert-heading" data-i18n="rlc_ctx_title">Context</h4>
+        <p data-i18n="rlc_ctx_text">This section explains the foundational concepts of Reinforcement Learning (RL) applied specifically to our 10x10 Grid Environment. In this environment, the agent must navigate from the starting point to the target while avoiding walls and danger zones.</p>
+    </div>
+
+    <div class="accordion shadow-sm" id="conceptsAccordion">
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" data-i18n="rlc_h1">
+                    1. Core Entities (Agent, Environment & State)
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#conceptsAccordion">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card h-100 border-primary">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary" data-i18n="rlc_ag_t">Agent</h5>
+                                    <p class="card-text" data-i18n="rlc_ag_d">The decision-maker. In our app, the agent is the virtual robot trying to find the best route through the 10x10 maze.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 border-success">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success" data-i18n="rlc_env_t">Environment</h5>
+                                    <p class="card-text" data-i18n="rlc_env_d">The world the agent interacts with. Here, it consists of a 10x10 grid with 68 paths, 20 walls (#), 10 danger zones (D), and 1 goal (T).</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 border-warning">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning" data-i18n="rlc_st_t">State</h5>
+                                    <p class="card-text" data-i18n="rlc_st_d">The agent's current situation. It is represented by the current (Row, Column) coordinates on the grid.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" data-i18n="rlc_h2">
+                    2. Actions, Rewards & Penalties
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#conceptsAccordion">
+                <div class="accordion-body">
+                    <table class="table table-bordered table-striped text-center mt-3">
+                        <thead class="table-dark">
+                            <tr>
+                                <th data-i18n="rlc_tbl_c">Concept</th>
+                                <th data-i18n="rlc_tbl_a">Application in our Project</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong data-i18n="rlc_act">Action</strong></td>
+                                <td data-i18n="rlc_act_d">The 4 possible moves: Up, Down, Left, Right.</td>
+                            </tr>
+                            <tr>
+                                <td><strong data-i18n="rlc_rew">Immediate Reward</strong></td>
+                                <td data-i18n="rlc_rew_d">Feedback for a single step: +100 for reaching the Target.</td>
+                            </tr>
+                            <tr>
+                                <td><strong data-i18n="rlc_pen">Penalty</strong></td>
+                                <td data-i18n="rlc_pen_d">Negative feedback: -50 for Danger Zones, -10 for Walls, -1 for normal steps to encourage speed.</td>
+                            </tr>
+                            <tr>
+                                <td><strong data-i18n="rlc_ret">Return</strong></td>
+                                <td data-i18n="rlc_ret_d">The total accumulated reward from a specific state until the end of the episode.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" data-i18n="rlc_h3">
+                    3. Learning Dynamics (Exploration vs Exploitation)
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#conceptsAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li class="mb-2" data-i18n="rlc_dyn1"><strong>Step:</strong> A single transition where the agent takes an action, receives a reward, and moves to a new state.</li>
+                        <li class="mb-2" data-i18n="rlc_dyn2"><strong>Episode:</strong> A complete run from the start state (0,0) until the agent reaches the target (9,9) or hits the step limit.</li>
+                        <li class="mb-2" data-i18n="rlc_dyn3"><strong>Experience:</strong> A tuple of data collected during a step: (State, Action, Reward, Next State).</li>
+                        <li class="mb-2" data-i18n="rlc_dyn4"><strong>Exploration:</strong> When the agent chooses random actions to discover new paths.</li>
+                        <li class="mb-2" data-i18n="rlc_dyn5"><strong>Exploitation:</strong> When the agent chooses the action with the highest learned Q-Value.</li>
+                        <li class="mb-2" data-i18n="rlc_dyn6"><strong>Epsilon-Greedy Strategy:</strong> We start with ε = 1.0 (100% exploration) and slowly decay it, forcing the agent to eventually exploit its knowledge.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" data-i18n="rlc_h4">
+                    4. Q-Learning & Value Functions
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#conceptsAccordion">
+                <div class="accordion-body">
+                    <p data-i18n="rlc_ql_p"><strong>Q-Learning</strong> is the algorithm used to train our agent. Instead of a traditional Q-Table, we use a SGDRegressor model with 400 features (One-Hot Encoding) to estimate the values.</p>
+                    <hr>
+                    <ul>
+                        <li class="mb-2" data-i18n="rlc_ql1"><strong>Policy (π):</strong> The strategy the agent learns. Our goal is to find the optimal policy.</li>
+                        <li class="mb-2" data-i18n="rlc_ql2"><strong>Discount Factor (γ):</strong> Set to 0.95. It determines how much the agent cares about future rewards versus immediate ones.</li>
+                        <li class="mb-2" data-i18n="rlc_ql3"><strong>State Value V(s):</strong> The expected return starting from a specific cell and following the policy.</li>
+                        <li class="mb-2" data-i18n="rlc_ql4"><strong>Action Value Q(s,a):</strong> The expected return of taking a specific action in a specific state, and then following the policy.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
