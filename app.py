@@ -13,6 +13,10 @@ import logistic_model
 import knn_model
 import kmeans_appointments  # <--- NUEVA IMPORTACIÓN PARA K-MEANS
 
+# [EN] Import the reinforcement learning components
+# [ES] Importar los componentes de aprendizaje por refuerzo
+from reinforcement import train, GRID, START, GOAL, ACTION_NAMES
+
 # Inicialización de la aplicación Flask
 app = Flask(__name__)
 
@@ -206,6 +210,32 @@ def kmeans_application():
                            summary=summary,
                            variable_seleccionada=variable_seleccionada) # Pasamos la variable para mantener el selector activo
 
+# ==============================================================================
+# RUTAS DE ACTIVIDAD 3 — REINFORCEMENT LEARNING
+# ==============================================================================
+
+@app.route('/reinforcement/concepts')
+def rl_concepts():
+    # [EN] Render the theoretical concepts page \ [ES] Renderizar la página de conceptos teóricos
+    return render_template('reinforcement_concepts.html')
+
+@app.route('/reinforcement/application', methods=['GET', 'POST'])
+def rl_application():
+    # [EN] Initialize result as None. Train only on POST request. \ [ES] Inicializar result como None. Entrenar solo en petición POST.
+    result = None
+    if request.method == 'POST':
+        # [EN] Execute the Q-Learning training cycle \ [ES] Ejecutar el ciclo de entrenamiento Q-Learning
+        result = train(episodes=1000)
+        
+    # [EN] Pass the result and grid settings to Jinja2 template \ [ES] Pasar el resultado y la configuración del mapa a la plantilla Jinja2
+    return render_template(
+        'reinforcement_application.html',
+        result=result,
+        grid=GRID,
+        start=START,
+        goal=GOAL,
+        actions=ACTION_NAMES
+    )
+
 if __name__ == '__main__':
     app.run(debug=True)
-
