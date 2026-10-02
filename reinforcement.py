@@ -62,9 +62,9 @@ def predict_q_values(model, state):
     return model.predict(features)
 
 
-# --- 3. TRAINING CYCLE (OPTIMIZED FOR CLOUD DEPLOYMENT) --- \ --- 3. CICLO DE ENTRENAMIENTO (OPTIMIZADO PARA NUBE) ---
+# --- 3. TRAINING CYCLE (OPTIMIZED FOR RENDER CLOUD) --- \ --- 3. CICLO DE ENTRENAMIENTO (OPTIMIZADO PARA RENDER NUBE) ---
 
-def train(episodes=300):
+def train(episodes=250):
     if episodes < 1:
         raise ValueError("episodes must be at least 1")
     
@@ -91,7 +91,7 @@ def train(episodes=300):
         state = START
         total_reward = 0
         
-        for _ in range(80): # Optimized max steps for fast response \ Pasos máximos optimizados para respuesta rápida
+        for _ in range(60): # Fast step limit to avoid HTTP timeout \ Límite de pasos rápido para evitar timeout HTTP
             if rng.random() < epsilon:
                 action = rng.randrange(NUMBER_OF_ACTIONS)
             else:
@@ -118,7 +118,7 @@ def train(episodes=300):
                 break
                 
         rewards.append(total_reward)
-        epsilon = max(0.05, epsilon * 0.985) # Smooth decay for 300 episodes \ Decaimiento suave para 300 episodios
+        epsilon = max(0.05, epsilon * 0.98) # Decay adjusted for 250 episodes \ Decaimiento ajustado para 250 episodios
         
     # EVALUATION PHASE \ FASE DE EVALUACIÓN
     state = START
